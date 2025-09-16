@@ -4,6 +4,20 @@ from datetime import datetime
 from uuid import UUID, uuid4
 
 
+# AI Service Response Models
+class TranscriptionSegment(BaseModel):
+    """Individual segment from audio transcription."""
+    start: float = Field(..., description="Start time in seconds")
+    end: float = Field(..., description="End time in seconds")
+    text: str = Field(..., description="Transcribed text for this segment")
+
+
+class TranscriptionResult(BaseModel):
+    """Result from audio transcription service."""
+    text: str = Field(..., description="Full transcribed text")
+    segments: List[Dict[str, Any]] = Field(default_factory=list, description="Time-segmented transcription")
+
+
 # Base schemas with validation
 class ProjectBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
