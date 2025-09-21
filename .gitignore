@@ -60,4 +60,4 @@ node_modules/
 # Virtual environments
 venv/
 env/
-.venv/
+.venv/omvee-ui/
