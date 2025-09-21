@@ -7,8 +7,11 @@ from unittest.mock import AsyncMock, MagicMock
 from typing import Dict, Any
 import uuid
 from datetime import datetime
+import json
+from pathlib import Path
 
 import httpx
+from app.models_pydantic import TranscriptionResult
 
 
 @pytest.fixture(scope="session")
@@ -64,6 +67,20 @@ def sample_audio_transcript():
             }
         ]
     }
+
+
+@pytest.fixture
+def rio_transcription():
+    """Real Rio Da Yung OG transcription for integration testing without Whisper API calls."""
+    transcription_path = Path("test_assets/transcriptions/rio_easy_kill_transcription.json")
+
+    if not transcription_path.exists():
+        pytest.skip(f"Rio transcription not found at {transcription_path}. Run generate_rio_transcription.py first.")
+
+    with open(transcription_path) as f:
+        data = json.load(f)
+
+    return TranscriptionResult(**data)
 
 
 @pytest.fixture
@@ -177,3 +194,23 @@ def test_project_id():
 def test_scene_id():
     """Test scene UUID for consistency across tests."""
     return "660e8400-e29b-41d4-a716-446655440000"
+
+
+@pytest.fixture
+def mock_openrouter_client():
+    """Mock HTTP client for OpenRouter API testing."""
+    client = MagicMock()
+
+    # Mock aiohttp session context manager behavior
+    session = MagicMock()
+    response = AsyncMock()
+    response.status = 200
+    response.json = AsyncMock(return_value={
+        "choices": [{"message": {"content": "{}"}}]
+    })
+
+    session.post = AsyncMock(return_value=response)
+    client.__aenter__ = AsyncMock(return_value=session)
+    client.__aexit__ = AsyncMock(return_value=False)
+
+    return client

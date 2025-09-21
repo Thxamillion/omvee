@@ -1,0 +1,206 @@
+{
+  "test_metadata": {
+    "timestamp": "2025-09-20T20:21:07.494478",
+    "scenes_tested": 5,
+    "batch_duration_seconds": 33.824566,
+    "individual_duration_seconds": 59.357327,
+    "speed_ratio": 1.7548584954497273
+  },
+  "performance": {
+    "batch_api_calls": 1,
+    "individual_api_calls": 5,
+    "efficiency_gain": "80% fewer API calls with batch"
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "title": "Line Them Up",
+      "start_time": 0.0,
+      "end_time": 6.6,
+      "duration": 6.6,
+      "source_segments": [
+        0
+      ],
+      "lyrics_excerpt": "Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel",
+      "theme": "violence",
+      "energy_level": 9,
+      "visual_potential": 8,
+      "narrative_importance": 7,
+      "reasoning": "Sets the tone with aggressive imagery and introduces the protagonist's mindset."
+    },
+    {
+      "scene_id": 2,
+      "title": "Witness to Violence",
+      "start_time": 6.6,
+      "end_time": 13.8,
+      "duration": 7.2,
+      "source_segments": [
+        1,
+        2
+      ],
+      "lyrics_excerpt": "I ain't touch the trigger, but I seen the drill Your career ain't promising, you probably need a will Seen a nigga with his head gone and I can see him still",
+      "theme": "street life",
+      "energy_level": 8,
+      "visual_potential": 9,
+      "narrative_importance": 8,
+      "reasoning": "Graphic depiction of violence and its aftermath, crucial for establishing the song's gritty reality."
+    },
+    {
+      "scene_id": 3,
+      "title": "Steering Wheel Horror",
+      "start_time": 13.8,
+      "end_time": 18.9,
+      "duration": 5.1,
+      "source_segments": [
+        3,
+        4
+      ],
+      "lyrics_excerpt": "I swear to God that nigga, she was stuck to the steering wheel Ten footers fit from five years ago",
+      "theme": "violence",
+      "energy_level": 7,
+      "visual_potential": 9,
+      "narrative_importance": 7,
+      "reasoning": "Shocking imagery that sticks with the viewer, enhancing the song's dark tone."
+    },
+    {
+      "scene_id": 4,
+      "title": "Skin Deep Threat",
+      "start_time": 18.9,
+      "end_time": 25.3,
+      "duration": 6.4,
+      "source_segments": [
+        5,
+        6
+      ],
+      "lyrics_excerpt": "I'ma wear his skin I put that on my kids, I get in that gym, I can't never tell That's why I gotta watch how I move",
+      "theme": "violence",
+      "energy_level": 8,
+      "visual_potential": 8,
+      "narrative_importance": 8,
+      "reasoning": "Shows the protagonist's paranoia and readiness for violence, key to his character."
+    },
+    {
+      "scene_id": 5,
+      "title": "Jail Fears",
+      "start_time": 25.3,
+      "end_time": 33.2,
+      "duration": 7.9,
+      "source_segments": [
+        7,
+        8,
+        9
+      ],
+      "lyrics_excerpt": "Move right, cause if I get some time, then I gotta do it Don't get out of free, jail curt, it's not Monopoly I'm down four racks and I ain't do shit but go out to eat",
+      "theme": "street life",
+      "energy_level": 6,
+      "visual_potential": 7,
+      "narrative_importance": 7,
+      "reasoning": "Reflective moment about the consequences of street life, adding depth."
+    }
+  ],
+  "batch_prompts": [
+    {
+      "scene_id": 1,
+      "image_prompt": "A dimly lit urban alley at night, rain falling heavily, reflecting neon lights. A group of shadowy figures stands in a line, silhouetted against a flickering streetlamp. The foreground shows a man in a hoodie, holding a weapon with a menacing stance. Cinematic lighting emphasizes the tension, with deep shadows and highlights on the weapon. The mood is intense and foreboding.",
+      "style_notes": "Gritty, high-contrast, with a focus on textures like wet pavement and fabric. Cinematic framing with a dynamic angle.",
+      "negative_prompt": "Avoid bright or cheerful tones, overly clean environments, or unrealistic weapon details.",
+      "setting": "Urban alley at night",
+      "shot_type": "Medium wide shot",
+      "mood": "Aggressive, tense",
+      "color_palette": "Dark blues, blacks, neon reds, and muted grays"
+    },
+    {
+      "scene_id": 2,
+      "image_prompt": "A chaotic street scene at dusk, with smoke and debris in the air. A young man stands in the foreground, his face partially obscured by a hood, looking horrified. In the background, a body is slumped against a car, with blood pooling on the ground. Soft, diffused lighting from streetlights creates a somber atmosphere. The focus is on the emotional weight of the scene.",
+      "style_notes": "Cinematic and gritty, with a focus on emotion. Use depth of field to blur the background slightly while keeping the foreground sharp.",
+      "negative_prompt": "Avoid overly graphic or gory details, overly bright lighting, or cartoonish expressions.",
+      "setting": "Urban street at dusk",
+      "shot_type": "Close-up with background context",
+      "mood": "Somber, reflective",
+      "color_palette": "Muted oranges, grays, and deep reds"
+    },
+    {
+      "scene_id": 3,
+      "image_prompt": "A car interior at night, lit by the cold glow of the dashboard. A man is slumped over the steering wheel, his face pressed against it, with blood visible. The windshield is cracked, and the rearview mirror reflects flashing police lights outside. The lighting is moody, with soft highlights on the steering wheel and cracked glass.",
+      "style_notes": "Dark and atmospheric, with a focus on detail like the cracked windshield and blood. Use a claustrophobic framing to heighten tension.",
+      "negative_prompt": "Avoid overly bright interiors, unrealistic blood, or distracting details outside the car.",
+      "setting": "Car interior at night",
+      "shot_type": "Medium close-up",
+      "mood": "Dark, foreboding",
+      "color_palette": "Cool blues, blacks, and deep reds"
+    },
+    {
+      "scene_id": 4,
+      "image_prompt": "A dark, industrial gym lit by a single overhead light. A shirtless man, covered in sweat, stands in the foreground, staring intensely into a mirror. His reflection shows scars and tattoos, with a menacing expression. The lighting is harsh, emphasizing his muscles and the tension in his face. The mood is raw and threatening.",
+      "style_notes": "High-contrast and gritty, with a focus on the texture of sweat and skin. Use a low-angle shot to emphasize power and dominance.",
+      "negative_prompt": "Avoid soft lighting, overly clean environments, or unrealistic body proportions.",
+      "setting": "Industrial gym",
+      "shot_type": "Low-angle close-up",
+      "mood": "Raw, threatening",
+      "color_palette": "Dark grays, browns, and highlights of sweat"
+    },
+    {
+      "scene_id": 5,
+      "image_prompt": "A stark jail cell interior, lit by a single fluorescent light. A man sits on a metal bunk, head in hands, surrounded by graffiti-covered walls. The lighting is cold and harsh, casting long shadows. A calendar on the wall shows days crossed off, emphasizing the passage of time. The mood is heavy and introspective.",
+      "style_notes": "Minimalist and bleak, with a focus on the texture of the walls and the man's posture. Use a wide shot to emphasize isolation.",
+      "negative_prompt": "Avoid warm tones, overly cluttered environments, or unrealistic jail cell details.",
+      "setting": "Jail cell interior",
+      "shot_type": "Wide shot",
+      "mood": "Heavy, introspective",
+      "color_palette": "Cold grays, whites, and muted greens"
+    }
+  ],
+  "individual_prompts": [
+    {
+      "scene_id": 1,
+      "image_prompt": "A gritty, urban alleyway at night, dimly lit by flickering streetlights casting long shadows. In the foreground, a young man dressed in a hoodie and jeans stands confidently, holding a gleaming, custom-crafted steel weapon, its surface reflecting the cold, harsh light. Behind him, a row of shadowy figures is lined up against a graffiti-covered brick wall, their faces obscured, creating a sense of tension and foreboding. The camera captures a low-angle shot, emphasizing the protagonist's dominance and the looming threat of violence. Smoke drifts through the air, adding a chaotic, cinematic texture. The scene exudes raw intensity, with every detail sharp and vivid, from the textures of the wall to the glint of the steel weapon.",
+      "style_notes": "Cinematic, high-contrast lighting with a focus on shadows and reflections. The composition should be dynamic, with a strong leading line created by the row of figures. The shot should feel immersive, as if the viewer is standing in the alley, experiencing the tension firsthand.",
+      "negative_prompt": "Avoid overly bright or cheerful lighting, overly polished or clean environments, and any elements that soften the gritty, raw emotion of the scene. Do not include any characters or objects that distract from the central focus on the protagonist and the lined-up figures.",
+      "setting": "A narrow, urban alleyway at night, with graffiti-covered brick walls, cracked pavement, and a sense of urban decay. The environment should feel suffocating and tense, reflecting the lyrical theme of violence.",
+      "shot_type": "Low-angle wide shot, capturing the protagonist in the foreground and the lined-up figures in the background, with the alley stretching out behind them. The angle emphasizes the protagonist's dominance and the scale of the threat.",
+      "mood": "Intense, foreboding, and raw, with a palpable sense of danger and tension. The scene should feel like a moment frozen in time, right before a violent confrontation.",
+      "color_palette": "Dominantly cool tones\u2014deep blues, grays, and blacks\u2014with sharp accents of metallic silver from the weapon and warm highlights from the flickering streetlights. The contrast between the cold environment and the warm glints of light enhances the emotional intensity."
+    },
+    {
+      "scene_id": 2,
+      "image_prompt": "A gritty urban alley at night, illuminated by flickering orange streetlights with harsh shadows. A young man lies motionless on the ground, his head partially obscured by a pool of dark blood, creating a stark contrast against the cracked asphalt. A shadowy figure stands in the background, partially hidden in the darkness, holding a drill as if witnessing the aftermath. The camera focuses on the victim\u2019s wide, lifeless eyes, frozen in shock, while the foreground blurs slightly to emphasize depth. Smoke lingers in the air, adding a sense of chaos and danger. Include subtle motion blur to convey tension and urgency.",
+      "style_notes": "Cinematic hyper-realism with a raw, unfiltered aesthetic. Use a high-contrast lighting setup to amplify the drama, with chiaroscuro effects to highlight key elements like the victim\u2019s face and the drill. The composition should feel claustrophobic, with tight framing to heighten the intensity.",
+      "negative_prompt": "Avoid bright, cheerful colors or overly clean environments. Do not include any elements that soften the scene\u2019s brutality, such as flowers or calming imagery. Ensure the drill is not cartoonish or unrealistic.",
+      "setting": "A dimly lit, narrow alleyway in a decaying urban neighborhood, littered with trash and graffiti. The walls are stained, and the ground is wet from recent rain, reflecting the orange glow of the streetlights.",
+      "shot_type": "Close-up shot of the victim\u2019s face, slightly tilted to create unease, with a shallow depth of field to blur the background. The camera angle is low, emphasizing the vulnerability of the victim and the dominance of the shadowy figure.",
+      "mood": "Tense, grim, and haunting. The scene should evoke a sense of dread and helplessness, with an undercurrent of raw emotion and trauma.",
+      "color_palette": "Dominant dark tones of black, deep gray, and blood red, accented by the harsh orange of the streetlights. Subtle hints of blue in the shadows to add coldness and detachment."
+    },
+    {
+      "scene_id": 3,
+      "image_prompt": "A high-intensity, cinematic close-up of a blood-splattered steering wheel, with a woman\u2019s hands gripping it tightly, her knuckles white from the strain. The camera is positioned low, looking up at the steering wheel to emphasize its dominance and the claustrophobic tension. Blood drips down the wheel and pools on the dashboard, illuminated by the harsh, flickering red and blue light of police sirens reflecting through the cracked windshield. The woman\u2019s face is partially visible in the rearview mirror, her expression a mix of terror and desperation, with streaks of sweat and tears glistening under the chaotic lighting. The background is blurred but reveals the distorted shapes of a chaotic car crash scene. The overall composition is tight and visceral, focusing on the raw emotion and violence described in the lyrics.",
+      "style_notes": "Gritty, high-contrast cinematography with a focus on dramatic lighting and raw, unfiltered emotion. The style should evoke a sense of urgency and horror, with a handheld camera effect to enhance the chaos. Use shallow depth of field to keep the focus on the steering wheel and the woman\u2019s hands.",
+      "negative_prompt": "Avoid overly clean or polished visuals, bright or cheerful lighting, or anything that diminishes the intensity and grittiness of the scene. Do not include unnecessary elements that distract from the steering wheel and the woman\u2019s hands.",
+      "setting": "Inside a wrecked car at night, surrounded by the aftermath of a violent crash. The environment is chaotic, with shattered glass, twisted metal, and the flashing lights of emergency vehicles.",
+      "shot_type": "Close-up, low-angle shot focusing on the steering wheel and hands, with a shallow depth of field to blur the background while keeping the subject in sharp focus.",
+      "mood": "Tense, violent, and desperate, with an overwhelming sense of horror and urgency.",
+      "color_palette": "Dark, desaturated tones dominated by black, red, and blue, with harsh contrasts between the cold blue of the sirens and the warm red of the blood. The overall palette should feel oppressive and intense."
+    },
+    {
+      "scene_id": 4,
+      "image_prompt": "A chilling, ultra-detailed close-up of a shadowy figure in a dimly lit gym, their face obscured but their muscular frame glistening with sweat under a single, harsh overhead light. The figure's hands are outstretched, gripping a grotesque, semi-transparent layer of skin like a trophy, veins and sinew subtly visible. The background is a blur of rusted weights and chains, with a faint reflection of the figure in a cracked mirror. The lighting is high-contrast, with deep shadows and a cold, sickly green tint to emphasize the horror. The camera angle is slightly low, looking up at the figure to amplify their dominance and menace. The mood is visceral and unsettling, with a sense of raw violence barely contained.",
+      "style_notes": "Cinematic horror aesthetic with influences from 'Sin City' and 'The Texas Chainsaw Massacre.' Use chiaroscuro lighting for dramatic contrast, and a handheld camera effect for raw intensity. The texture should feel gritty and tactile, with hyper-realistic details on the skin and environment.",
+      "negative_prompt": "Avoid bright colors, soft lighting, or any sense of warmth. Do not show the figure's full face\u2014keep it mysterious. No excessive gore; the horror should be implied, not explicit. Avoid clean or modern environments; this is a derelict, oppressive space.",
+      "setting": "A decaying, abandoned gym with broken equipment, peeling paint, and a thick layer of dust. The air feels heavy, and the only light comes from a flickering overhead bulb.",
+      "shot_type": "Extreme close-up with a slight Dutch angle to create unease. The focus is razor-sharp on the skin in the figure's hands, with the background slightly blurred but still detailed.",
+      "mood": "Unhinged, predatory, and claustrophobic. The viewer should feel a sense of dread and inevitability, as if the figure is seconds from striking.",
+      "color_palette": "Dominant sickly green and desaturated browns, with stark black shadows and muted red accents (like rust or dried blood). The skin has a pale, yellowish hue, almost cadaverous."
+    },
+    {
+      "scene_id": 5,
+      "image_prompt": "A gritty urban street at night, illuminated by flickering streetlights casting harsh shadows. A young man stands center-frame, dressed in casual streetwear, his face partially obscured by a hoodie, exuding a mix of frustration and anxiety. Behind him, a chain-link fence looms, symbolizing entrapment, with a dimly lit 'JAIL' sign visible in the background. The ground is littered with crumpled bills and fast-food wrappers, emphasizing financial struggles. Close-up shots of his clenched fists and a frustrated glance toward the camera convey tension. The scene is shot in a low-angle, wide shot to emphasize vulnerability and the oppressive environment. Subtle motion blur adds dynamism, as if the world is moving too fast for him to keep up.",
+      "style_notes": "Cinematic realism with a raw, unfiltered aesthetic. Use shallow depth of field to focus on the protagonist while blurring the background. Incorporate handheld camera techniques for a sense of immediacy and unease. Add a slight vignette to draw attention to the central figure.",
+      "negative_prompt": "Avoid overly bright or cheerful lighting, clean or polished environments, unrealistic or fantastical elements, and excessive digital effects that detract from the raw, gritty tone.",
+      "setting": "A desolate urban street at night, surrounded by graffiti-covered walls and a chain-link fence, with a 'JAIL' sign faintly visible in the background.",
+      "shot_type": "Wide shot with a low-angle perspective, combined with close-ups of the protagonist's hands and face.",
+      "mood": "Tense, anxious, and brooding, with a sense of entrapment and frustration.",
+      "color_palette": "Dominantly dark tones\u2014deep blues, grays, and blacks\u2014with subtle pops of warm orange from the streetlights and cold green from the 'JAIL' sign. High contrast to emphasize shadows and mood."
+    }
+  ],
+  "batch_style_consistency": "The visual style is gritty, cinematic, and emotionally resonant, with a focus on high-contrast lighting, atmospheric settings, and textured details. Each scene maintains a dark, urban aesthetic, with a consistent use of moody lighting and a muted color palette to reflect the themes of violence, street life, and complex emotions."
+}

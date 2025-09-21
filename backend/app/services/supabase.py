@@ -92,6 +92,57 @@ class SupabaseService:
             logger.error(f"Error deleting project {project_id}: {str(e)}")
             raise
 
+    # Job management operations
+    def create_job(self, job_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Create a new job for tracking async operations."""
+        try:
+            result = self.client.table('jobs').insert(job_data).execute()
+            return result.data[0] if result.data else None
+        except Exception as e:
+            logger.error(f"Error creating job: {str(e)}")
+            raise
+
+    def get_job(self, job_id: str) -> Optional[Dict[str, Any]]:
+        """Get a job by ID."""
+        try:
+            result = self.client.table('jobs')\
+                .select('*')\
+                .eq('id', job_id)\
+                .execute()
+            return result.data[0] if result.data else None
+        except Exception as e:
+            logger.error(f"Error getting job {job_id}: {str(e)}")
+            raise
+
+    def update_job(self, job_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
+        """Update job status and progress."""
+        try:
+            result = self.client.table('jobs')\
+                .update(updates)\
+                .eq('id', job_id)\
+                .execute()
+            return result.data[0] if result.data else None
+        except Exception as e:
+            logger.error(f"Error updating job {job_id}: {str(e)}")
+            raise
+
+    def get_project_jobs(self, project_id: UUID, job_type: str = None) -> List[Dict[str, Any]]:
+        """Get all jobs for a project, optionally filtered by type."""
+        try:
+            query = self.client.table('jobs')\
+                .select('*')\
+                .eq('project_id', str(project_id))\
+                .order('created_at', desc=True)
+            
+            if job_type:
+                query = query.eq('type', job_type)
+            
+            result = query.execute()
+            return result.data or []
+        except Exception as e:
+            logger.error(f"Error getting jobs for project {project_id}: {str(e)}")
+            raise
+
     # Scene operations
     def get_project_scenes(self, project_id: UUID) -> List[Dict[str, Any]]:
         """Get all scenes for a project."""
@@ -205,7 +256,7 @@ class SupabaseService:
         """Create a signed URL for uploading a file."""
         try:
             result = self.client.storage.from_(bucket).create_signed_upload_url(path, expires_in)
-            return result.get('signedURL', '')
+            return result.get('signed_url', '')
         except Exception as e:
             logger.error(f"Error creating signed upload URL: {str(e)}")
             raise
@@ -214,7 +265,7 @@ class SupabaseService:
         """Get public URL for a file."""
         try:
             result = self.client.storage.from_(bucket).get_public_url(path)
-            return result.get('publicURL', '')
+            return result.get('public_url', '')
         except Exception as e:
             logger.error(f"Error getting public URL: {str(e)}")
             raise
@@ -222,3 +273,11 @@ class SupabaseService:
 
 # Global instance
 supabase_service = SupabaseService()
+
+
+# Dependency function for FastAPI
+def get_supabase_client() -> Client:
+    """FastAPI dependency to get Supabase client."""
+    from supabase import create_client
+    from app.config import settings
+    return create_client(settings.supabase_url, settings.supabase_anon_key)

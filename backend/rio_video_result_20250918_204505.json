@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "video_urls": [
+    "https://replicate.delivery/xezq/JBVdzHwA0ZK0IpAsHZOcapsCqHDKOUBO63yo1Y12ufqIzSrKA/tmpsk44j90v.mp4"
+  ],
+  "generation_metadata": {
+    "model": "bytedance/seedance-1-lite:5b618302c710fbcf00365dc75133537b5deed8a95dccaf983215559bb31fc943",
+    "scene_id": 1,
+    "image_url": "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+    "motion_prompt": "Rio Da Yung OG in urban alleyway, stands confidently holding metallic object. He steps forward with determination, chain swinging. Camera slowly zooms in with low angle. Smoke swirls behind him, graffiti on walls. Intense, gritty movement matching hip-hop energy.",
+    "generation_time": 35.90865,
+    "timestamp": "2025-09-18T20:45:05.819741",
+    "duration_seconds": 6
+  },
+  "scene_context": {
+    "scene_id": 1,
+    "title": "Manual Generation",
+    "lyrics_excerpt": "Manual video generation",
+    "theme": "user-defined",
+    "energy_level": 5
+  },
+  "model_parameters": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "camera_fixed": false,
+    "image": "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+    "prompt": "Rio Da Yung OG in urban alleyway, stands confidently holding metallic object. He steps forward with determination, chain swinging. Camera slowly zooms in with low angle. Smoke swirls behind him, graffiti on walls. Intense, gritty movement matching hip-hop energy."
+  }
+}

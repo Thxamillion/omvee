@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "video_urls": [
+    "https://replicate.delivery/xezq/p0B9gjWjjzZIOtqXnIaeBD6hA0wTTwqMA9yMWO5oC7YfHmWVA/tmp9visp16a.mp4"
+  ],
+  "generation_metadata": {
+    "model": "bytedance/seedance-1-lite:5b618302c710fbcf00365dc75133537b5deed8a95dccaf983215559bb31fc943",
+    "scene_id": 1,
+    "image_url": "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+    "motion_prompt": "The artist stands confidently in a gritty urban alley, surrounded by graffiti-covered walls and dim streetlights. He slowly raises his hand, miming a gun gesture, as the camera zooms in on his intense expression. The background flickers with shadows of figures moving quickly across the alley, creating a tense atmosphere. The camera tilts slightly upward, emphasizing the artist's dominant stance, while the environment pulses with a rhythmic, low-frequency vibration, matching the song's intense and confident mood.",
+    "generation_time": 34.286621,
+    "timestamp": "2025-09-18T21:21:02.611967",
+    "duration_seconds": 6
+  },
+  "scene_context": {
+    "scene_id": 1,
+    "title": "Manual Generation",
+    "lyrics_excerpt": "Manual video generation",
+    "theme": "user-defined",
+    "energy_level": 5
+  },
+  "model_parameters": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "camera_fixed": false,
+    "image": "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+    "prompt": "The artist stands confidently in a gritty urban alley, surrounded by graffiti-covered walls and dim streetlights. He slowly raises his hand, miming a gun gesture, as the camera zooms in on his intense expression. The background flickers with shadows of figures moving quickly across the alley, creating a tense atmosphere. The camera tilts slightly upward, emphasizing the artist's dominant stance, while the environment pulses with a rhythmic, low-frequency vibration, matching the song's intense and confident mood."
+  }
+}

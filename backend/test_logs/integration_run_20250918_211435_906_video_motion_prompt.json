@@ -1,0 +1,15 @@
+{
+  "timestamp": "20250918_211435_906",
+  "prompt_type": "video_motion_prompt",
+  "prompt": "SCENE CONTEXT:\n- Song: Easy Kill (Hip-Hop/Rap)\n- Lyrics: \"Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel\"\n- Scene Theme: street life\n- Scene Mood: Intense, confident, and gritty\n- Duration: 6.6 seconds\n- Artist Present: True\n\nANALYZE this image and create a motion prompt that:\n1. **START with what you see in the image** - describe the current scene\n2. Describes movement/actions that match the lyrics and mood\n3. Adds appropriate camera movements (zoom, pan, tilt, etc.)\n4. Includes background/environment motion\n5. Reflects the song's actual genre and emotional tone\n\nImage URL: https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+  "response": "The artist stands confidently in a gritty urban alley, surrounded by graffiti-covered walls and dim streetlights. He slowly raises his hand, miming a gun gesture, as the camera zooms in on his intense expression. The background flickers with shadows of figures moving quickly across the alley, creating a tense atmosphere. The camera tilts slightly upward, emphasizing the artist's dominant stance, while the environment pulses with a rhythmic, low-frequency vibration, matching the song's intense and confident mood.",
+  "metadata": {
+    "scene_id": 1,
+    "song_title": "Easy Kill",
+    "genre": "Hip-Hop/Rap",
+    "artist_present": true,
+    "image_url": "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg",
+    "duration": 6.6
+  },
+  "model": "deepseek/deepseek-chat"
+}

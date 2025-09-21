@@ -25,23 +25,30 @@ Once you have your Supabase project set up and credentials, follow these steps:
 2. Copy and paste the contents of `migrations/002_storage_setup.sql`
 3. Click **Run** to set up storage policies
 
-### Step 4: Add Sample Data (Optional)
+### Step 4: Add Artists Table (NEW!)
+
+1. Back in **SQL Editor**
+2. Copy and paste the contents of `migrations/003_add_artists_table.sql`
+3. Click **Run** to add artist asset management system
+
+### Step 5: Add Sample Data (Optional)
 
 1. In **SQL Editor**
 2. Copy and paste the contents of `migrations/003_sample_data.sql`
 3. Click **Run** to add test data
 
-### Step 5: Verify Setup
+### Step 6: Verify Setup
 
 Check that these tables were created:
-- ✅ projects
-- ✅ selected_scenes
+- ✅ projects (updated with artist references)
+- ✅ selected_scenes (updated with artist assignments)
 - ✅ scene_prompts
 - ✅ generated_images
 - ✅ video_clips
 - ✅ user_approvals
 - ✅ final_videos
 - ✅ jobs
+- ✅ **artists** (NEW!)
 
 Check that storage bucket exists:
 - ✅ project-files bucket

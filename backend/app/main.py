@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.routers import health, projects, uploads
+from app.routers import health, projects, uploads, artists, image_generation, video_generation, transcription, scenes
 
 app = FastAPI(
     title="OMVEE API",
@@ -24,6 +24,11 @@ app.add_middleware(
 app.include_router(health.router, tags=["health"])
 app.include_router(projects.router, prefix="/api", tags=["projects"])
 app.include_router(uploads.router, prefix="/api", tags=["uploads"])
+app.include_router(artists.router, prefix="/api", tags=["artists"])
+app.include_router(image_generation.router, prefix="/api", tags=["image-generation"])
+app.include_router(video_generation.router, prefix="/api", tags=["video-generation"])
+app.include_router(transcription.router, prefix="/api", tags=["transcription"])
+app.include_router(scenes.router, prefix="/api", tags=["scenes"])
 
 
 @app.get("/")

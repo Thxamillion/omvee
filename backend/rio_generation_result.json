@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "image_urls": [
+    "https://replicate.delivery/xezq/Y9A2YJO4ggolElTbTV96vxeojQJr6j3PpgXv1mSuczrtySrKA/tmpj67gc5x4.jpg"
+  ],
+  "generation_metadata": {
+    "model": "minimax/image-01:47ca89ad46682c1dd0ca335601cd7ea2eb10fb94ce4e0a5abafa7e74f23ae7b6",
+    "scene_id": 1,
+    "reference_used": true,
+    "reference_url": "https://photos.bandsintown.com/thumb/19980952.jpeg",
+    "generation_time": 46.603868,
+    "timestamp": "2025-09-18T20:44:11.641367"
+  },
+  "visual_prompt": {
+    "scene_id": 1,
+    "image_prompt": "Ultra-detailed, cinematic music video frame featuring Rio Da Yung OG as shown in the reference image, standing confidently in a gritty urban alleyway. The artist is dressed in streetwear, including a hoodie and distressed jeans, with his signature chain visible. He holds a metallic object symbolizing 'peasy steel,' glinting under harsh, low-angle streetlight. The alley is lined with graffiti-covered walls and chain-link fences, with faint smoke rising in the background. The camera angle is a dynamic low-angle shot, emphasizing his dominance and the raw energy of the lyrics. The lighting is dramatic, with stark contrasts between shadows and highlights, creating a moody, intense atmosphere. The scene captures the tension and bravado of the line 'Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel,' with Rio's expression exuding confidence and determination.",
+    "setting": "A dimly lit urban alleyway with graffiti-covered walls, chain-link fences, and a faint haze of smoke in the background. The environment should feel raw and unpolished, reflecting the street life theme.",
+    "mood": "Intense, confident, and gritty, with a sense of raw power and unapologetic bravado.",
+    "shot_type": "Low-angle close-up shot, emphasizing Rio Da Yung OG's dominance and the metallic object in his hand. The camera is slightly tilted for a dynamic, edgy feel.",
+    "color_palette": "Dark, desaturated tones with pops of metallic silver and muted graffiti colors (reds, blues, and yellows). The lighting adds stark contrasts, with deep shadows and bright highlights on the artist and the metallic object."
+  },
+  "model_parameters": {
+    "aspect_ratio": "16:9",
+    "number_of_images": 1,
+    "prompt_optimizer": true,
+    "prompt": "Ultra-detailed, cinematic music video frame featuring Rio Da Yung OG as shown in the reference image, standing confidently in a gritty urban alleyway. The artist is dressed in streetwear, including a hoodie and distressed jeans, with his signature chain visible. He holds a metallic object symbolizing 'peasy steel,' glinting under harsh, low-angle streetlight. The alley is lined with graffiti-covered walls and chain-link fences, with faint smoke rising in the background. The camera angle is a dynamic low-angle shot, emphasizing his dominance and the raw energy of the lyrics. The lighting is dramatic, with stark contrasts between shadows and highlights, creating a moody, intense atmosphere. The scene captures the tension and bravado of the line 'Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel,' with Rio's expression exuding confidence and determination.",
+    "subject_reference": "https://photos.bandsintown.com/thumb/19980952.jpeg"
+  }
+}

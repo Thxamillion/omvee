@@ -1,4 +1,3 @@
-from app.services.supabase import supabase_service
 from typing import Dict, Any
 from uuid import UUID
 import logging
@@ -8,7 +7,10 @@ logger = logging.getLogger(__name__)
 
 class SupabaseStorageService:
     def __init__(self):
-        self.storage = supabase_service.get_storage_client()
+        from supabase import create_client
+        from app.config import settings
+        self.client = create_client(settings.supabase_url, settings.supabase_anon_key)
+        self.storage = self.client.storage
 
     def create_upload_url(
         self,
@@ -28,18 +30,15 @@ class SupabaseStorageService:
 
         try:
             # Create signed upload URL
-            signed_url = self.storage.from_(bucket_name).create_signed_upload_url(
-                file_path,
-                expires_in
-            )
+            signed_url = self.storage.from_(bucket_name).create_signed_upload_url(file_path)
 
             # Get public URL for later access
             public_url = self.storage.from_(bucket_name).get_public_url(file_path)
 
             return {
-                'signed_url': signed_url.get('signedURL', ''),
+                'signed_url': signed_url if isinstance(signed_url, str) else signed_url.get('signed_url', ''),
                 'file_path': file_path,
-                'public_url': public_url.get('publicURL', ''),
+                'public_url': public_url if isinstance(public_url, str) else public_url.get('public_url', ''),
                 'bucket': bucket_name
             }
 
@@ -51,7 +50,7 @@ class SupabaseStorageService:
         """Get public URL for a file."""
         try:
             result = self.storage.from_(bucket).get_public_url(file_path)
-            return result.get('publicURL', '')
+            return result.get('public_url', '')
         except Exception as e:
             logger.error(f"Error getting public URL: {str(e)}")
             raise

@@ -2,6 +2,18 @@ from pydantic_settings import BaseSettings
 from typing import Optional
 
 
+class ModelConfig:
+    """AI Model configuration - centralized model IDs"""
+    # Image Generation
+    image_model: str = "minimax/image-01:47ca89ad46682c1dd0ca335601cd7ea2eb10fb94ce4e0a5abafa7e74f23ae7b6"
+
+    # Video Generation
+    video_model: str = "bytedance/seedance-1-lite:5b618302c710fbcf00365dc75133537b5deed8a95dccaf983215559bb31fc943"
+
+    # Scene Selection & Prompt Generation
+    scene_selection_model: str = "deepseek/deepseek-chat"
+
+
 class Settings(BaseSettings):
     # Supabase
     supabase_url: str
