@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List, Dict
 from uuid import UUID
 
-from app.services.supabase import supabase_service
+from app.services.supabase import supabase_service, get_user_supabase_service, UserSupabaseService
 from app.services.supabase_storage import supabase_storage_service
 from app.dependencies.auth import get_current_user
 from app import models_pydantic as schemas
@@ -11,7 +11,10 @@ router = APIRouter()
 
 
 @router.post("/projects", response_model=schemas.Project)
-async def create_project(project: schemas.ProjectCreate, user_id: str = Depends(get_current_user)):
+async def create_project(
+    project: schemas.ProjectCreate,
+    user_id: str = Depends(get_current_user)
+):
     """Create a new project."""
     try:
         project_data = project.model_dump()
@@ -36,7 +39,11 @@ async def create_project(project: schemas.ProjectCreate, user_id: str = Depends(
 
 
 @router.get("/projects", response_model=schemas.ProjectList)
-async def list_projects(skip: int = 0, limit: int = 50, user_id: str = Depends(get_current_user)):
+async def list_projects(
+    skip: int = 0,
+    limit: int = 50,
+    user_id: str = Depends(get_current_user)
+):
     """List all projects with pagination."""
     try:
         result = supabase_service.list_projects(skip=skip, limit=limit)
@@ -54,7 +61,10 @@ async def list_projects(skip: int = 0, limit: int = 50, user_id: str = Depends(g
 
 
 @router.get("/projects/{project_id}", response_model=schemas.Project)
-async def get_project(project_id: UUID, user_id: str = Depends(get_current_user)):
+async def get_project(
+    project_id: UUID,
+    user_id: str = Depends(get_current_user)
+):
     """Get a specific project by ID."""
     try:
         result = supabase_service.get_project(project_id)

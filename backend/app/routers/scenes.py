@@ -3,7 +3,7 @@ Scene selection and visual prompt generation router.
 Handles Phase 2 of the AI pipeline: Scene Selection → Visual Prompts.
 """
 
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks, Depends
 from uuid import UUID
 import asyncio
 from datetime import datetime
