@@ -6,6 +6,7 @@ from app.models_pydantic import Artist, ArtistCreate
 from app.services.artist import ArtistService
 from app.services.storage import StorageService
 from app.services.supabase import get_supabase_client
+from app.dependencies.auth import get_current_user
 from supabase import Client
 
 
@@ -22,9 +23,37 @@ def get_storage_service(supabase_client: Client = Depends(get_supabase_client)) 
     return StorageService(supabase_client)
 
 
+@router.get("/test-storage", response_model=Dict[str, Any])
+async def test_storage_access(
+    storage_service: StorageService = Depends(get_storage_service)
+) -> Dict[str, Any]:
+    """
+    Test storage bucket access for debugging.
+
+    Returns:
+        Dictionary with detailed storage access test results
+    """
+    try:
+        test_results = storage_service.test_bucket_access()
+        return {
+            "status": "success",
+            "test_results": test_results,
+            "bucket_configured": test_results.get("exists", False),
+            "upload_working": test_results.get("can_upload", False)
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "bucket_configured": False,
+            "upload_working": False
+        }
+
+
 @router.post("/", response_model=Artist, status_code=201)
 async def create_artist(
     artist_data: ArtistCreate,
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service)
 ) -> Artist:
     """
@@ -40,7 +69,7 @@ async def create_artist(
         HTTPException: If creation fails
     """
     try:
-        return await artist_service.create_artist(artist_data)
+        return await artist_service.create_artist(artist_data, user_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create artist: {e}")
 
@@ -48,6 +77,7 @@ async def create_artist(
 @router.get("/{artist_id}", response_model=Artist)
 async def get_artist(
     artist_id: UUID,
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service)
 ) -> Artist:
     """
@@ -72,6 +102,7 @@ async def get_artist(
 async def list_artists(
     limit: int = 100,
     offset: int = 0,
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service)
 ) -> Dict[str, Any]:
     """
@@ -100,6 +131,7 @@ async def list_artists(
 async def update_artist(
     artist_id: UUID,
     update_data: Dict[str, Any],
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service)
 ) -> Artist:
     """
@@ -129,6 +161,7 @@ async def update_artist(
 @router.delete("/{artist_id}", status_code=204)
 async def delete_artist(
     artist_id: UUID,
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service)
 ):
     """
@@ -154,6 +187,7 @@ async def delete_artist(
 async def upload_artist_reference_images(
     artist_id: UUID,
     images: List[UploadFile] = File(..., description="3-5 reference images"),
+    user_id: str = Depends(get_current_user),
     artist_service: ArtistService = Depends(get_artist_service),
     storage_service: StorageService = Depends(get_storage_service)
 ) -> Dict[str, Any]:
@@ -217,6 +251,7 @@ async def upload_artist_reference_images(
 async def get_presigned_upload_urls(
     artist_id: UUID,
     file_names: List[str],
+    user_id: str = Depends(get_current_user),
     storage_service: StorageService = Depends(get_storage_service)
 ) -> Dict[str, Any]:
     """

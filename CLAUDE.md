@@ -80,3 +80,4 @@ Each improvement file includes:
 
 ---
 *This file helps Claude Code understand the project structure and current state for efficient development assistance.*
+- Check our current claude code background tasks, befor startig front or backend servers.

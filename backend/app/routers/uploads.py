@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from app import models_pydantic as schemas
 from app.services.supabase_storage import supabase_storage_service
+from app.dependencies.auth import get_current_user
 
 router = APIRouter()
 
 
 @router.post("/uploads/presign", response_model=schemas.SupabaseUploadResponse)
-async def create_presigned_upload(upload_request: schemas.SupabaseUploadRequest):
+async def create_presigned_upload(upload_request: schemas.SupabaseUploadRequest, user_id: str = Depends(get_current_user)):
     """Create a presigned upload URL for direct Supabase Storage upload."""
 
     # Validate content type

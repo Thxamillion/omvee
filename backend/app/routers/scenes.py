@@ -13,6 +13,7 @@ from app.services.openrouter import OpenRouterService
 from app.services.supabase import supabase_service
 from app import models_pydantic as schemas
 from app.config import settings
+from app.dependencies.auth import get_current_user
 
 router = APIRouter()
 
@@ -209,11 +210,20 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
 
 
 @router.post("/projects/{project_id}/scenes/select", response_model=schemas.SceneGenerationJobResponse)
-async def start_scene_generation(project_id: UUID, background_tasks: BackgroundTasks):
+async def start_scene_generation(
+    project_id: UUID,
+    background_tasks: BackgroundTasks,
+    user_id: str = Depends(get_current_user)
+):
     """Start scene selection and parallel visual prompt generation."""
     try:
-        # Check if project exists and has transcription
+        # Check if project exists and belongs to user
         project = supabase_service.get_project(project_id)
+        if project and project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
+            )
         if not project:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -277,7 +287,10 @@ async def start_scene_generation(project_id: UUID, background_tasks: BackgroundT
 
 
 @router.get("/projects/{project_id}/scenes", response_model=schemas.ProjectScenesResponse)
-async def get_project_scenes(project_id: UUID):
+async def get_project_scenes(
+    project_id: UUID,
+    user_id: str = Depends(get_current_user)
+):
     """Get all scenes and their visual prompts for a project."""
     try:
         project = supabase_service.get_project(project_id)
@@ -285,6 +298,12 @@ async def get_project_scenes(project_id: UUID):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
             )
 
         # Get scenes from database
@@ -339,7 +358,10 @@ async def get_project_scenes(project_id: UUID):
 
 
 @router.get("/scenes/jobs/{job_id}/status", response_model=schemas.SceneGenerationStatusResponse)
-async def get_scene_generation_status(job_id: str):
+async def get_scene_generation_status(
+    job_id: str,
+    user_id: str = Depends(get_current_user)
+):
     """Get real-time scene generation progress."""
     try:
         job = supabase_service.get_job(job_id)
@@ -348,6 +370,17 @@ async def get_scene_generation_status(job_id: str):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Scene generation job not found"
             )
+
+        # Verify job belongs to user through project ownership
+        payload = job.get('payload_json', {})
+        project_id = payload.get('project_id')
+        if project_id:
+            project = supabase_service.get_project(UUID(project_id))
+            if project and project.get('user_id') != user_id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied: Job does not belong to user"
+                )
 
         # Extract payload data
         payload = job.get('payload_json', {})
@@ -371,7 +404,11 @@ async def get_scene_generation_status(job_id: str):
 
 
 @router.put("/projects/{project_id}/scenes/{scene_id}/regenerate", response_model=schemas.VisualPrompt)
-async def regenerate_scene_prompt(project_id: UUID, scene_id: int):
+async def regenerate_scene_prompt(
+    project_id: UUID,
+    scene_id: int,
+    user_id: str = Depends(get_current_user)
+):
     """Regenerate visual prompt for a specific scene."""
     try:
         project = supabase_service.get_project(project_id)
@@ -379,6 +416,12 @@ async def regenerate_scene_prompt(project_id: UUID, scene_id: int):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
             )
 
         # Get the specific scene

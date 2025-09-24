@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.routers import health, projects, uploads, artists, image_generation, video_generation, transcription, scenes
+from app.routers import health, projects, uploads, artists, image_generation, video_generation, transcription, scenes, auth
+from app.auth.jwks_verifier import initialize_jwks_verifier
 
 app = FastAPI(
     title="OMVEE API",
@@ -10,6 +11,9 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+# Initialize JWKS verifier for JWT authentication
+initialize_jwks_verifier(settings.supabase_url)
 
 # CORS middleware
 app.add_middleware(
@@ -22,6 +26,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(health.router, tags=["health"])
+app.include_router(auth.router, prefix="/api", tags=["authentication"])
 app.include_router(projects.router, prefix="/api", tags=["projects"])
 app.include_router(uploads.router, prefix="/api", tags=["uploads"])
 app.include_router(artists.router, prefix="/api", tags=["artists"])

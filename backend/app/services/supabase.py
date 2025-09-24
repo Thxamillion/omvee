@@ -281,3 +281,14 @@ def get_supabase_client() -> Client:
     from supabase import create_client
     from app.config import settings
     return create_client(settings.supabase_url, settings.supabase_anon_key)
+
+
+def get_user_supabase_client(access_token: str) -> Client:
+    """Get Supabase client with user session for RLS."""
+    from supabase import create_client
+    from app.config import settings
+
+    client = create_client(settings.supabase_url, settings.supabase_anon_key)
+    # Set the user session for RLS
+    client.auth.set_session(access_token, "")
+    return client

@@ -20,3 +20,4 @@ ALTER TABLE projects ADD CONSTRAINT projects_status_check
 
 -- Comment
 COMMENT ON CONSTRAINT projects_status_check ON projects IS 'Allowed project status values including scenes_processing and scenes_completed for AI scene generation workflow';
+

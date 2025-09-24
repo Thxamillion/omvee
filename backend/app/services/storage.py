@@ -15,6 +15,91 @@ class StorageService:
         self.supabase = supabase_client
         self.bucket_name = "project-files"  # Must match your Supabase bucket name
 
+    def _ensure_bucket_exists(self) -> bool:
+        """
+        Ensure the storage bucket exists. Create it if it doesn't exist.
+
+        Returns:
+            True if bucket exists or was created successfully
+        """
+        try:
+            # Try to list objects in the bucket to check if it exists
+            list_result = self.supabase.storage.from_(self.bucket_name).list()
+            print(f"Bucket '{self.bucket_name}' exists. List result type: {type(list_result)}")
+            print(f"List result: {list_result}")
+            return True
+        except Exception as list_error:
+            print(f"Failed to list bucket '{self.bucket_name}': {list_error}")
+            # Bucket might not exist, try to create it
+            try:
+                print(f"Attempting to create bucket '{self.bucket_name}'...")
+                result = self.supabase.storage.create_bucket(self.bucket_name, {"public": True})
+                print(f"Create bucket result: {result}")
+                return True
+            except Exception as create_error:
+                print(f"Failed to create bucket '{self.bucket_name}': {create_error}")
+                return False
+
+    def test_bucket_access(self) -> dict:
+        """
+        Test bucket access and return detailed information for debugging.
+
+        Returns:
+            Dictionary with test results
+        """
+        from io import BytesIO
+
+        test_results = {
+            "bucket_name": self.bucket_name,
+            "exists": False,
+            "can_list": False,
+            "can_upload": False,
+            "error": None
+        }
+
+        try:
+            # Test bucket listing
+            list_result = self.supabase.storage.from_(self.bucket_name).list()
+            test_results["exists"] = True
+            test_results["can_list"] = True
+            test_results["list_result"] = str(list_result)
+
+            # Test small upload
+            test_content = b"test content"
+            test_path = "test_upload.txt"
+
+            try:
+                upload_result = self.supabase.storage.from_(self.bucket_name).upload(
+                    file=test_content,
+                    path=test_path,
+                    file_options={"upsert": "true"}
+                )
+
+                # Handle boolean return value properly
+                if isinstance(upload_result, bool):
+                    test_results["can_upload"] = upload_result
+                    test_results["upload_result_type"] = "bool"
+                    test_results["upload_result"] = str(upload_result)
+                else:
+                    test_results["can_upload"] = True
+                    test_results["upload_result_type"] = str(type(upload_result))
+                    test_results["upload_result"] = str(upload_result)
+
+            except Exception as upload_error:
+                test_results["can_upload"] = False
+                test_results["upload_error"] = str(upload_error)
+
+            # Clean up test file
+            try:
+                self.supabase.storage.from_(self.bucket_name).remove([test_path])
+            except:
+                pass
+
+        except Exception as e:
+            test_results["error"] = str(e)
+
+        return test_results
+
     async def upload_artist_reference_images(
         self,
         artist_id: UUID,
@@ -38,6 +123,13 @@ class StorageService:
             raise HTTPException(
                 status_code=422,
                 detail="Must upload between 3 and 5 reference images"
+            )
+
+        # Ensure bucket exists
+        if not self._ensure_bucket_exists():
+            raise HTTPException(
+                status_code=500,
+                detail=f"Storage bucket '{self.bucket_name}' is not available. Please contact support."
             )
 
         uploaded_urls = []
@@ -69,18 +161,47 @@ class StorageService:
                 processed_content = self._process_image(file_content, max_size=(1024, 1024))
 
                 # Upload to Supabase Storage
-                result = self.supabase.storage.from_(self.bucket_name).upload(
-                    path=file_path,
-                    file=processed_content,
-                    file_options={
-                        "content-type": image_file.content_type,
-                        "cache-control": "3600",
-                        "upsert": True  # Allow overwriting existing files
-                    }
-                )
+                print(f"Attempting upload to bucket '{self.bucket_name}', path: '{file_path}'")
+                print(f"File content type: {image_file.content_type}, size: {len(processed_content)} bytes")
 
-                if result.status_code not in [200, 201]:
-                    raise Exception(f"Upload failed: {result}")
+                try:
+                    # Use bytes directly as per Supabase Python client requirements
+                    result = self.supabase.storage.from_(self.bucket_name).upload(
+                        file=processed_content,
+                        path=file_path,
+                        file_options={
+                            "content-type": image_file.content_type,
+                            "cache-control": "3600",
+                            "upsert": "true"  # String value as per docs
+                        }
+                    )
+
+                    print(f"Upload result type: {type(result)}")
+                    print(f"Upload result: {result}")
+
+                except Exception as upload_error:
+                    print(f"Upload exception: {type(upload_error).__name__}: {upload_error}")
+                    print(f"Full error details: {upload_error}")
+                    raise Exception(f"Upload failed with exception: {upload_error}")
+
+                # Handle successful upload results
+                print(f"Upload result type: {type(result)}")
+                print(f"Upload result: {result}")
+
+                # Different Supabase client versions return different result types
+                if isinstance(result, bool):
+                    if result:
+                        print("Upload returned True - upload successful")
+                    else:
+                        raise Exception(f"Upload failed: Storage service returned False")
+                elif hasattr(result, 'status_code'):
+                    print(f"Status code: {result.status_code}")
+                    if result.status_code not in [200, 201]:
+                        raise Exception(f"Upload failed with status {result.status_code}: {result}")
+                elif hasattr(result, 'error') and result.error:
+                    raise Exception(f"Upload failed with error: {result.error}")
+                else:
+                    print("Upload completed, assuming success...")
 
                 # Get public URL
                 public_url = self.supabase.storage.from_(self.bucket_name).get_public_url(file_path)

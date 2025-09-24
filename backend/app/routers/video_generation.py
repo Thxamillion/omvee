@@ -9,6 +9,7 @@ from app.services.video_generation import VideoGenerationService
 from app.services.openrouter import OpenRouterService
 from app.services.supabase import get_supabase_client
 from app.models_pydantic import VisualPrompt, SceneSelection
+from app.dependencies.auth import get_current_user
 from supabase import Client
 
 router = APIRouter(prefix="/video-generation", tags=["video-generation"])
@@ -46,7 +47,8 @@ def get_openrouter_service() -> OpenRouterService:
 @router.post("/generate", response_model=Dict[str, Any])
 async def generate_video(
     request: VideoGenerationRequest,
-    video_service: VideoGenerationService = Depends(get_video_generation_service)
+    video_service: VideoGenerationService = Depends(get_video_generation_service),
+    user_id: str = Depends(get_current_user)
 ) -> Dict[str, Any]:
     """
     Generate video from image and motion prompt.
@@ -93,7 +95,8 @@ async def generate_video_from_scene(
     request: VideoFromSceneRequest,
     video_service: VideoGenerationService = Depends(get_video_generation_service),
     openrouter_service: OpenRouterService = Depends(get_openrouter_service),
-    supabase_client: Client = Depends(get_supabase_client)
+    supabase_client: Client = Depends(get_supabase_client),
+    user_id: str = Depends(get_current_user)
 ) -> Dict[str, Any]:
     """
     Generate video from complete scene context using AI director.

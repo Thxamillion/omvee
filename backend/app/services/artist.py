@@ -13,12 +13,13 @@ class ArtistService:
     def __init__(self, supabase_client: Client):
         self.supabase = supabase_client
 
-    async def create_artist(self, artist_data: ArtistCreate) -> Artist:
+    async def create_artist(self, artist_data: ArtistCreate, user_id: str) -> Artist:
         """
         Create a new artist with reference images.
 
         Args:
             artist_data: Artist creation data including reference images
+            user_id: ID of the user creating the artist
 
         Returns:
             Created Artist object
@@ -32,6 +33,7 @@ class ArtistService:
                 'name': artist_data.name,
                 'description': artist_data.description,
                 'reference_image_urls': artist_data.reference_image_urls,
+                'user_id': user_id,
                 'created_at': datetime.now().isoformat()
             }).execute()
 

@@ -3,7 +3,7 @@ Audio transcription router using OpenAI Whisper API.
 Handles audio transcription, progress tracking, and editing.
 """
 
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks, Depends
 from uuid import UUID
 import asyncio
 import httpx
@@ -12,6 +12,7 @@ from typing import Optional
 from app.services.whisper import WhisperService
 from app.services.supabase import supabase_service
 from app import models_pydantic as schemas
+from app.dependencies.auth import get_current_user
 
 router = APIRouter()
 
@@ -101,15 +102,25 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
 
 
 @router.post("/projects/{project_id}/transcribe", response_model=schemas.TranscriptionJobResponse)
-async def start_transcription(project_id: UUID, background_tasks: BackgroundTasks):
+async def start_transcription(
+    project_id: UUID,
+    background_tasks: BackgroundTasks,
+    user_id: str = Depends(get_current_user)
+):
     """Start transcription job for project audio."""
     try:
-        # Check if project exists and has audio
+        # Check if project exists and belongs to user
         project = supabase_service.get_project(project_id)
         if not project:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
             )
 
         if not project.get('audio_url'):
@@ -177,7 +188,10 @@ async def start_transcription(project_id: UUID, background_tasks: BackgroundTask
 
 
 @router.get("/projects/{project_id}/transcription", response_model=schemas.TranscriptionStatusResponse)
-async def get_transcription(project_id: UUID):
+async def get_transcription(
+    project_id: UUID,
+    user_id: str = Depends(get_current_user)
+):
     """Get transcription results for project."""
     try:
         project = supabase_service.get_project(project_id)
@@ -185,6 +199,12 @@ async def get_transcription(project_id: UUID):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
             )
 
         transcription_status = project.get('transcription_status', 'pending')
@@ -211,7 +231,10 @@ async def get_transcription(project_id: UUID):
 
 
 @router.get("/transcription/jobs/{job_id}/status", response_model=schemas.TranscriptionStatusResponse)
-async def get_transcription_job_status(job_id: str):
+async def get_transcription_job_status(
+    job_id: str,
+    user_id: str = Depends(get_current_user)
+):
     """Get real-time transcription job progress."""
     try:
         if job_id not in transcription_jobs:
@@ -221,6 +244,16 @@ async def get_transcription_job_status(job_id: str):
             )
 
         job = transcription_jobs[job_id]
+
+        # Verify job belongs to user through project ownership
+        project_id = job.get('project_id')
+        if project_id:
+            project = supabase_service.get_project(UUID(project_id))
+            if project and project.get('user_id') != user_id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied: Job does not belong to user"
+                )
 
         # Convert result to TranscriptionResult if available
         transcription_result = None
@@ -244,15 +277,25 @@ async def get_transcription_job_status(job_id: str):
 
 
 @router.put("/projects/{project_id}/transcription", response_model=schemas.TranscriptionStatusResponse)
-async def update_transcription(project_id: UUID, transcription_edit: schemas.TranscriptionEditRequest):
+async def update_transcription(
+    project_id: UUID,
+    transcription_edit: schemas.TranscriptionEditRequest,
+    user_id: str = Depends(get_current_user)
+):
     """Save user-edited transcription."""
     try:
-        # Check if project exists
+        # Check if project exists and belongs to user
         project = supabase_service.get_project(project_id)
         if not project:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
             )
 
         # Validate that project has a transcription

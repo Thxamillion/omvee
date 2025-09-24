@@ -1,20 +1,22 @@
-from fastapi import APIRouter, HTTPException, status
-from typing import List
+from fastapi import APIRouter, HTTPException, status, Depends
+from typing import List, Dict
 from uuid import UUID
 
 from app.services.supabase import supabase_service
 from app.services.supabase_storage import supabase_storage_service
+from app.dependencies.auth import get_current_user
 from app import models_pydantic as schemas
 
 router = APIRouter()
 
 
 @router.post("/projects", response_model=schemas.Project)
-async def create_project(project: schemas.ProjectCreate):
+async def create_project(project: schemas.ProjectCreate, user_id: str = Depends(get_current_user)):
     """Create a new project."""
     try:
         project_data = project.model_dump()
         project_data['status'] = 'created'
+        project_data['user_id'] = user_id
 
         result = supabase_service.create_project(project_data)
         if not result:
@@ -34,7 +36,7 @@ async def create_project(project: schemas.ProjectCreate):
 
 
 @router.get("/projects", response_model=schemas.ProjectList)
-async def list_projects(skip: int = 0, limit: int = 50):
+async def list_projects(skip: int = 0, limit: int = 50, user_id: str = Depends(get_current_user)):
     """List all projects with pagination."""
     try:
         result = supabase_service.list_projects(skip=skip, limit=limit)
@@ -52,7 +54,7 @@ async def list_projects(skip: int = 0, limit: int = 50):
 
 
 @router.get("/projects/{project_id}", response_model=schemas.Project)
-async def get_project(project_id: UUID):
+async def get_project(project_id: UUID, user_id: str = Depends(get_current_user)):
     """Get a specific project by ID."""
     try:
         result = supabase_service.get_project(project_id)
@@ -73,7 +75,7 @@ async def get_project(project_id: UUID):
 
 
 @router.put("/projects/{project_id}", response_model=schemas.Project)
-async def update_project(project_id: UUID, project_update: schemas.ProjectUpdate):
+async def update_project(project_id: UUID, project_update: schemas.ProjectUpdate, user_id: str = Depends(get_current_user)):
     """Update a project."""
     try:
         # First check if project exists
@@ -107,7 +109,7 @@ async def update_project(project_id: UUID, project_update: schemas.ProjectUpdate
 
 
 @router.delete("/projects/{project_id}")
-async def delete_project(project_id: UUID):
+async def delete_project(project_id: UUID, user_id: str = Depends(get_current_user)):
     """Delete a project."""
     try:
         # First check if project exists
@@ -137,7 +139,7 @@ async def delete_project(project_id: UUID):
 
 # Audio upload endpoints
 @router.post("/projects/{project_id}/upload-audio", response_model=schemas.AudioUploadResponse)
-async def upload_project_audio(project_id: UUID, audio_request: schemas.AudioUploadRequest):
+async def upload_project_audio(project_id: UUID, audio_request: schemas.AudioUploadRequest, user_id: str = Depends(get_current_user)):
     """Create presigned URL for audio upload to specific project."""
     try:
         # First check if project exists
@@ -186,7 +188,7 @@ async def upload_project_audio(project_id: UUID, audio_request: schemas.AudioUpl
 
 
 @router.post("/projects/{project_id}/process-audio", response_model=schemas.AudioProcessingResponse)
-async def process_project_audio(project_id: UUID, audio_info: schemas.AudioProcessingRequest):
+async def process_project_audio(project_id: UUID, audio_info: schemas.AudioProcessingRequest, user_id: str = Depends(get_current_user)):
     """Process uploaded audio file and prepare for transcription."""
     try:
         # Check if project exists
@@ -250,7 +252,7 @@ async def process_project_audio(project_id: UUID, audio_info: schemas.AudioProce
 
 # Images endpoints
 @router.get("/projects/{project_id}/images", response_model=schemas.ImageList)
-async def get_project_images(project_id: UUID):
+async def get_project_images(project_id: UUID, user_id: str = Depends(get_current_user)):
     """Get all generated images for a project."""
     try:
         images_data = supabase_service.get_project_images(project_id)
@@ -266,7 +268,7 @@ async def get_project_images(project_id: UUID):
 
 # Video clips endpoints
 @router.get("/projects/{project_id}/clips", response_model=schemas.VideoClipList)
-async def get_project_clips(project_id: UUID):
+async def get_project_clips(project_id: UUID, user_id: str = Depends(get_current_user)):
     """Get all video clips for a project."""
     try:
         clips_data = supabase_service.get_project_clips(project_id)
@@ -282,7 +284,7 @@ async def get_project_clips(project_id: UUID):
 
 # Jobs endpoints
 @router.get("/projects/{project_id}/jobs", response_model=schemas.JobList)
-async def get_project_jobs(project_id: UUID):
+async def get_project_jobs(project_id: UUID, user_id: str = Depends(get_current_user)):
     """Get all jobs for a project."""
     try:
         jobs_data = supabase_service.get_project_jobs(project_id)
@@ -293,4 +295,128 @@ async def get_project_jobs(project_id: UUID):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error getting jobs: {str(e)}"
+        )
+
+
+# Artist association endpoints
+@router.put("/projects/{project_id}/artists")
+async def associate_artists_with_project(
+    project_id: UUID,
+    artist_associations: Dict[str, str],  # {artist_id: selected_image_url}
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Associate artists with a project and set their selected reference images.
+
+    Args:
+        project_id: UUID of the project
+        artist_associations: Dictionary mapping artist_id to selected_image_url
+
+    Returns:
+        Updated project with selected_reference_images
+    """
+    try:
+        # Verify project exists
+        project = supabase_service.get_project(project_id)
+        if not project:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found"
+            )
+
+        # Verify all artists exist and image URLs are valid
+        from app.services.artist import ArtistService
+        artist_service = ArtistService(supabase_service.client)
+
+        artist_ids = [UUID(artist_id) for artist_id in artist_associations.keys()]
+        artists = await artist_service.get_artists_by_ids(artist_ids)
+
+        if len(artists) != len(artist_ids):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="One or more artists not found"
+            )
+
+        # Validate selected image URLs belong to the artists
+        for artist in artists:
+            selected_url = artist_associations[str(artist.id)]
+            if selected_url not in artist.reference_image_urls:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Selected image URL not found in artist {artist.name}'s reference images"
+                )
+
+        # Update project with artist associations
+        update_data = {
+            'available_artist_ids': [str(artist_id) for artist_id in artist_ids],
+            'selected_reference_images': artist_associations
+        }
+
+        updated_project = supabase_service.update_project(project_id, update_data)
+        return updated_project
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to associate artists: {str(e)}"
+        )
+
+
+@router.get("/projects/{project_id}/available-artists")
+async def get_available_artists_for_project(project_id: UUID, user_id: str = Depends(get_current_user)):
+    """
+    Get all available artists for project selection.
+
+    Args:
+        project_id: UUID of the project
+
+    Returns:
+        List of available artists with reference images
+    """
+    try:
+        # Verify project exists
+        project = supabase_service.get_project(project_id)
+        if not project:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found"
+            )
+
+        # Get all artists
+        from app.services.artist import ArtistService
+        artist_service = ArtistService(supabase_service.client)
+        artists = await artist_service.list_artists(limit=100)
+
+        # Get currently selected artists for this project
+        current_associations = project.get('selected_reference_images', {})
+
+        # Format response with selection status
+        artist_data = []
+        for artist in artists:
+            artist_info = {
+                'id': str(artist.id),
+                'name': artist.name,
+                'description': artist.description,
+                'reference_image_urls': artist.reference_image_urls,
+                'created_at': artist.created_at.isoformat(),
+                'is_selected': str(artist.id) in current_associations,
+                'selected_image_url': current_associations.get(str(artist.id))
+            }
+            artist_data.append(artist_info)
+
+        return {
+            'project_id': str(project_id),
+            'available_artists': artist_data,
+            'total_artists': len(artist_data),
+            'selected_count': len(current_associations)
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get available artists: {str(e)}"
         )

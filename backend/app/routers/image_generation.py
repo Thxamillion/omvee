@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from app.services.image_generation import ImageGenerationService
 from app.services.artist import ArtistService
 from app.services.supabase import get_supabase_client
+from app.dependencies.auth import get_current_user
 from app.models_pydantic import VisualPrompt
 from supabase import Client
 
@@ -44,6 +45,7 @@ def get_artist_service(supabase_client: Client = Depends(get_supabase_client)) -
 @router.post("/generate", response_model=Dict[str, Any])
 async def generate_image(
     request: ImageGenerationRequest,
+    user_id: str = Depends(get_current_user),
     image_service: ImageGenerationService = Depends(get_image_generation_service)
 ) -> Dict[str, Any]:
     """
@@ -86,6 +88,7 @@ async def generate_image(
 async def generate_image_with_artist(
     artist_id: UUID,
     request: ImageGenerationRequest,
+    user_id: str = Depends(get_current_user),
     image_service: ImageGenerationService = Depends(get_image_generation_service),
     artist_service: ArtistService = Depends(get_artist_service)
 ) -> Dict[str, Any]:
@@ -148,6 +151,7 @@ async def generate_image_with_artist(
 @router.get("/cost-estimate", response_model=Dict[str, Any])
 async def get_cost_estimate(
     num_images: int = 1,
+    user_id: str = Depends(get_current_user),
     image_service: ImageGenerationService = Depends(get_image_generation_service)
 ) -> Dict[str, Any]:
     """
@@ -167,6 +171,7 @@ async def get_cost_estimate(
 
 @router.get("/model-info", response_model=Dict[str, Any])
 async def get_model_info(
+    user_id: str = Depends(get_current_user),
     image_service: ImageGenerationService = Depends(get_image_generation_service)
 ) -> Dict[str, Any]:
     """
@@ -182,7 +187,7 @@ async def get_model_info(
 
 
 @router.get("/test-rio-prompt")
-async def get_test_rio_prompt() -> Dict[str, Any]:
+async def get_test_rio_prompt(user_id: str = Depends(get_current_user)) -> Dict[str, Any]:
     """
     Get a sample Rio prompt for testing image generation.
 
