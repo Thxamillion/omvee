@@ -19,8 +19,7 @@ router = APIRouter()
 # Initialize Whisper service
 whisper_service = WhisperService()
 
-# Simple in-memory job tracking (in production, use Redis or database)
-transcription_jobs = {}
+# Transcription now uses DB-backed jobs via the jobs table (see scenes.py pattern)
 
 
 async def download_audio_file(audio_url: str) -> bytes:
@@ -43,18 +42,27 @@ async def download_audio_file(audio_url: str) -> bytes:
 
 
 async def transcription_background_task(project_id: str, audio_url: str, job_id: str):
-    """Background task for audio transcription."""
+    """Background task for audio transcription using DB-backed jobs."""
     try:
-        # Update job status
-        transcription_jobs[job_id] = {
-            'status': 'processing',
-            'progress': 0.1,
-            'project_id': project_id
-        }
+        # Mark job as running
+        supabase_service.update_job(job_id, {
+            'status': 'running',
+            'progress': 10,
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'initializing'
+            }
+        })
 
         # Download audio file
         audio_content = await download_audio_file(audio_url)
-        transcription_jobs[job_id]['progress'] = 0.3
+        supabase_service.update_job(job_id, {
+            'progress': 30,
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'downloaded_audio'
+            }
+        })
 
         # Extract filename from URL for format detection
         filename = audio_url.split('/')[-1]
@@ -70,7 +78,14 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
             audio_file=audio_file,
             filename=filename
         )
-        transcription_jobs[job_id]['progress'] = 0.8
+
+        supabase_service.update_job(job_id, {
+            'progress': 80,
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'transcribed'
+            }
+        })
 
         # Save transcription to project
         update_data = {
@@ -78,27 +93,32 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
             'transcription_data': transcription_result.model_dump(),
             'transcript_text': transcription_result.text
         }
-
         result = supabase_service.update_project(UUID(project_id), update_data)
         if not result:
             raise Exception("Failed to save transcription to project")
 
         # Mark job as completed
-        transcription_jobs[job_id] = {
+        supabase_service.update_job(job_id, {
             'status': 'completed',
-            'progress': 1.0,
-            'project_id': project_id,
-            'result': transcription_result.model_dump()
-        }
+            'progress': 100,
+            'result_json': transcription_result.model_dump(),
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'completed'
+            }
+        })
 
     except Exception as e:
         # Mark job as failed
-        transcription_jobs[job_id] = {
+        supabase_service.update_job(job_id, {
             'status': 'failed',
-            'progress': 0.0,
-            'project_id': project_id,
-            'error': str(e)
-        }
+            'progress': 0,
+            'error': str(e),
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'failed'
+            }
+        })
 
 
 @router.post("/projects/{project_id}/transcribe", response_model=schemas.TranscriptionJobResponse)
@@ -143,30 +163,38 @@ async def start_transcription(
                 detail="Project already transcribed. Use PUT endpoint to edit."
             )
 
-        # Generate job ID
-        import uuid
-        job_id = str(uuid.uuid4())
+        # Prevent duplicate active transcription jobs for this project
+        active_jobs = [j for j in supabase_service.get_project_jobs(project_id) if j.get('type') in ('transcribe', 'transcription') and j.get('status') in ('pending', 'running')]
+        if active_jobs:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Transcription already in progress"
+            )
 
-        # Update project status
-        update_data = {
-            'transcription_status': 'processing'
+        # Create DB job entry
+        job_data = {
+            'project_id': str(project_id),
+            'type': 'transcribe',
+            'status': 'pending',
+            'progress': 0,
+            'payload_json': {
+                'project_id': str(project_id),
+                'stage': 'queued'
+            }
         }
-        supabase_service.update_project(project_id, update_data)
+        job = supabase_service.create_job(job_data)
+        job_id = job['id']
 
-        # Start background transcription
+        # Update project transcription status
+        supabase_service.update_project(project_id, {'transcription_status': 'processing'})
+
+        # Start background transcription (DB-backed job)
         background_tasks.add_task(
             transcription_background_task,
             str(project_id),
             project['audio_url'],
             job_id
         )
-
-        # Initialize job tracking
-        transcription_jobs[job_id] = {
-            'status': 'started',
-            'progress': 0.0,
-            'project_id': str(project_id)
-        }
 
         # Estimate duration based on audio length
         audio_duration = project.get('audio_duration', 180.0)  # Default 3 minutes
@@ -237,16 +265,16 @@ async def get_transcription_job_status(
 ):
     """Get real-time transcription job progress."""
     try:
-        if job_id not in transcription_jobs:
+        job = supabase_service.get_job(job_id)
+        if not job:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Transcription job not found"
             )
 
-        job = transcription_jobs[job_id]
-
         # Verify job belongs to user through project ownership
-        project_id = job.get('project_id')
+        payload = job.get('payload_json', {})
+        project_id = payload.get('project_id') or job.get('project_id')
         if project_id:
             project = supabase_service.get_project(UUID(project_id))
             if project and project.get('user_id') != user_id:
@@ -257,12 +285,20 @@ async def get_transcription_job_status(
 
         # Convert result to TranscriptionResult if available
         transcription_result = None
-        if job.get('result'):
-            transcription_result = schemas.TranscriptionResult(**job['result'])
+        if job.get('result_json'):
+            transcription_result = schemas.TranscriptionResult(**job['result_json'])
+
+        # Convert integer progress (0-100) to 0-1 float to keep prior response shape
+        progress = None
+        if job.get('progress') is not None:
+            try:
+                progress = float(job['progress']) / 100.0
+            except Exception:
+                progress = None
 
         return schemas.TranscriptionStatusResponse(
             status=job['status'],
-            progress=job.get('progress'),
+            progress=progress,
             transcription_data=transcription_result,
             error_message=job.get('error')
         )
