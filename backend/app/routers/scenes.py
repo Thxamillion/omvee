@@ -24,8 +24,8 @@ openrouter_service = OpenRouterService(api_key=settings.openrouter_api_key)
 # scene_generation_jobs = {}  # DEPRECATED - using jobs table
 
 
-async def parallel_scene_generation_task(project_id: str, job_id: str):
-    """Background task for parallel scene selection and visual prompt generation."""
+async def scene_selection_task(project_id: str, job_id: str):
+    """Background task for scene selection only."""
     try:
         # Update job status in database
         supabase_service.update_job(job_id, {
@@ -33,9 +33,7 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
             'progress': 10,
             'payload_json': {
                 'project_id': project_id,
-                'completed_prompts': 0,
-                'total_prompts': 0,
-                'stage': 'initializing'
+                'stage': 'selecting_scenes'
             }
         })
 
@@ -51,34 +49,44 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
         # Convert to TranscriptionResult
         transcription_result = schemas.TranscriptionResult(**transcription_data)
 
-        # Update progress in database
+        # Update progress
         supabase_service.update_job(job_id, {
-            'progress': 20,
+            'progress': 30,
             'payload_json': {
                 'project_id': project_id,
-                'completed_prompts': 0,
-                'total_prompts': 0,
-                'stage': 'scene_selection_complete'
+                'stage': 'analyzing_lyrics'
             }
         })
 
-        # Step 1: Scene selection
+        # Scene selection
         song_metadata = {
             'title': project.get('name', 'Unknown'),
             'artist': project.get('artist', 'Unknown'),
             'genre': project.get('genre', 'Unknown')
         }
 
+        # Get song duration from project or transcription
+        song_duration = project.get('audio_duration')
+
         scene_selection = await openrouter_service.select_scenes(
             transcription=transcription_result,
             target_scenes=15,
-            song_metadata=song_metadata
+            song_metadata=song_metadata,
+            song_duration=song_duration
         )
+
+        # Update progress
+        supabase_service.update_job(job_id, {
+            'progress': 80,
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'saving_scenes'
+            }
+        })
 
         # Save scenes to database
         scenes_data = []
         for i, scene in enumerate(scene_selection.selected_scenes):
-            # Explicitly map to database column names to avoid field ordering issues
             scene_data = {
                 'project_id': str(project_id),
                 'lyric_excerpt': scene.lyrics_excerpt,
@@ -100,50 +108,143 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
         for scene_data in scenes_data:
             supabase_service.create_scene(scene_data)
 
-        # Update progress and total prompts in database
+        # Update project with scene selection data
+        update_data = {
+            'status': 'scenes_processing',
+            'scene_selection_data': scene_selection.model_dump(),
+            'scenes_count': len(scene_selection.selected_scenes)
+        }
+        supabase_service.update_project(UUID(project_id), update_data)
+
+        # Mark job as completed
         supabase_service.update_job(job_id, {
-            'progress': 40,
+            'status': 'completed',
+            'progress': 100,
+            'result_json': {
+                'scenes_count': len(scene_selection.selected_scenes),
+                'completion_time': str(datetime.now())
+            },
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'completed',
+                'scenes_count': len(scene_selection.selected_scenes)
+            }
+        })
+
+        print(f"✅ Scene selection completed: {len(scene_selection.selected_scenes)} scenes")
+
+        # Automatically start visual prompt generation job
+        prompt_job_data = {
+            'project_id': str(project_id),
+            'type': 'generate_visual_prompts',
+            'status': 'pending',
+            'progress': 0,
+            'payload_json': {
+                'project_id': str(project_id),
+                'stage': 'initializing',
+                'completed_prompts': 0,
+                'total_prompts': len(scene_selection.selected_scenes)
+            }
+        }
+        prompt_job = supabase_service.create_job(prompt_job_data)
+        prompt_job_id = prompt_job['id']
+
+        # Start prompt generation task
+        from fastapi import BackgroundTasks
+        import asyncio
+        asyncio.create_task(visual_prompt_generation_task(project_id, prompt_job_id))
+
+    except Exception as e:
+        # Mark job as failed
+        supabase_service.update_job(job_id, {
+            'status': 'failed',
+            'progress': 0,
+            'error': str(e),
+            'payload_json': {
+                'project_id': project_id,
+                'stage': 'failed'
+            }
+        })
+        print(f"❌ Scene selection failed: {str(e)}")
+
+
+async def visual_prompt_generation_task(project_id: str, job_id: str):
+    """Background task for visual prompt generation only."""
+    try:
+        # Update job status
+        supabase_service.update_job(job_id, {
+            'status': 'running',
+            'progress': 10,
             'payload_json': {
                 'project_id': project_id,
                 'completed_prompts': 0,
-                'total_prompts': len(scene_selection.selected_scenes),
+                'stage': 'loading_scenes'
+            }
+        })
+
+        # Get project and scenes
+        project = supabase_service.get_project(UUID(project_id))
+        if not project:
+            raise Exception("Project not found")
+
+        scenes = supabase_service.get_project_scenes(UUID(project_id))
+        if not scenes:
+            raise Exception("No scenes found for project")
+
+        # Update job with total prompts count
+        supabase_service.update_job(job_id, {
+            'progress': 20,
+            'payload_json': {
+                'project_id': project_id,
+                'completed_prompts': 0,
+                'total_prompts': len(scenes),
                 'stage': 'generating_prompts'
             }
         })
 
-        # Step 2: Parallel visual prompt generation
-        print(f"🎨 Starting parallel generation of {len(scene_selection.selected_scenes)} visual prompts...")
+        # Convert database scenes to SceneSelection format
+        scene_selections = []
+        for scene in scenes:
+            scene_selection = schemas.SceneSelection(
+                scene_id=scene['scene_id'],
+                title=scene['title'],
+                start_time=scene['start_time'],
+                end_time=scene['end_time'],
+                duration=scene['duration'],
+                source_segments=[],  # Default empty list - not stored in database
+                lyrics_excerpt=scene['lyric_excerpt'],
+                theme=scene['theme'],
+                energy_level=scene['energy_level'],
+                visual_potential=scene['visual_potential'],
+                narrative_importance=scene['narrative_importance'],
+                reasoning=scene['reasoning']
+            )
+            scene_selections.append(scene_selection)
 
-        # Get artist reference images from project
+        print(f"🎨 Starting parallel generation of {len(scenes)} visual prompts...")
+
+        # Get song metadata and artist references
+        song_metadata = {
+            'title': project.get('name', 'Unknown'),
+            'artist': project.get('artist', 'Unknown'),
+            'genre': project.get('genre', 'Unknown')
+        }
         artist_reference_images = project.get('selected_reference_images', {})
 
-        # Fire all individual prompt calls in parallel with artist references
+        # Fire all prompt generation tasks in parallel
         prompt_tasks = [
             openrouter_service.generate_individual_visual_prompt_with_artist(
                 scene, artist_reference_images, song_metadata
             )
-            for scene in scene_selection.selected_scenes
+            for scene in scene_selections
         ]
 
         # Wait for all prompts to complete
         visual_prompts = await asyncio.gather(*prompt_tasks)
 
-        # Save prompts to database and update job progress
-        for i, (scene, prompt) in enumerate(zip(scene_selection.selected_scenes, visual_prompts)):
-            prompt_data = {
-                'project_id': project_id,
-                'scene_id': scene.scene_id,
-                'image_prompt': prompt.image_prompt,
-                'style_notes': prompt.style_notes,
-                'negative_prompt': prompt.negative_prompt,
-                'setting': prompt.setting,
-                'shot_type': prompt.shot_type,
-                'mood': prompt.mood,
-                'color_palette': prompt.color_palette
-            }
-
-            # Save to scene_prompts table (you'll need to create this table)
-            # For now, we'll update the selected_scenes table with prompt data
+        # Save prompts and update progress
+        for i, (scene, prompt) in enumerate(zip(scene_selections, visual_prompts)):
+            # Save to database
             supabase_service.client.table('selected_scenes')\
                 .update({
                     'visual_prompt_data': prompt.model_dump(),
@@ -153,9 +254,9 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
                 .eq('scene_id', scene.scene_id)\
                 .execute()
 
-            # Update progress in database
+            # Update progress
             completed_prompts = i + 1
-            progress = 40 + int(50 * completed_prompts / len(visual_prompts))
+            progress = 20 + int(70 * completed_prompts / len(visual_prompts))
             supabase_service.update_job(job_id, {
                 'progress': progress,
                 'payload_json': {
@@ -166,20 +267,16 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
                 }
             })
 
-        # Update project status
-        update_data = {
-            'status': 'scenes_completed',
-            'scene_selection_data': scene_selection.model_dump(),
-            'scenes_count': len(scene_selection.selected_scenes)
-        }
-        supabase_service.update_project(UUID(project_id), update_data)
+        # Update project status to fully completed
+        supabase_service.update_project(UUID(project_id), {
+            'status': 'scenes_completed'
+        })
 
-        # Mark job as completed in database
+        # Mark job as completed
         supabase_service.update_job(job_id, {
             'status': 'completed',
             'progress': 100,
             'result_json': {
-                'scenes_count': len(scene_selection.selected_scenes),
                 'prompts_generated': len(visual_prompts),
                 'completion_time': str(datetime.now())
             },
@@ -191,10 +288,10 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
             }
         })
 
-        print(f"✅ Scene generation completed: {len(scene_selection.selected_scenes)} scenes, {len(visual_prompts)} prompts")
+        print(f"✅ Visual prompt generation completed: {len(visual_prompts)} prompts")
 
     except Exception as e:
-        # Mark job as failed in database
+        # Mark job as failed
         supabase_service.update_job(job_id, {
             'status': 'failed',
             'progress': 0,
@@ -202,11 +299,10 @@ async def parallel_scene_generation_task(project_id: str, job_id: str):
             'payload_json': {
                 'project_id': project_id,
                 'completed_prompts': 0,
-                'total_prompts': 0,
                 'stage': 'failed'
             }
         })
-        print(f"❌ Scene generation failed: {str(e)}")
+        print(f"❌ Visual prompt generation failed: {str(e)}")
 
 
 @router.post("/projects/{project_id}/scenes/select", response_model=schemas.SceneGenerationJobResponse)
@@ -244,17 +340,15 @@ async def start_scene_generation(
                 detail=f"Project scenes already {current_status.replace('_', ' ')}"
             )
 
-        # Create job in database
+        # Create scene selection job in database
         job_data = {
             'project_id': str(project_id),
-            'type': 'generate_prompts',
+            'type': 'select_scenes',
             'status': 'pending',
             'progress': 0,
             'payload_json': {
                 'project_id': str(project_id),
-                'stage': 'initializing',
-                'completed_prompts': 0,
-                'total_prompts': 0
+                'stage': 'initializing'
             }
         }
         job = supabase_service.create_job(job_data)
@@ -264,9 +358,9 @@ async def start_scene_generation(
         update_data = {'status': 'scenes_processing'}
         supabase_service.update_project(project_id, update_data)
 
-        # Start background scene generation
+        # Start background scene selection
         background_tasks.add_task(
-            parallel_scene_generation_task,
+            scene_selection_task,
             str(project_id),
             job_id
         )
@@ -283,6 +377,92 @@ async def start_scene_generation(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to start scene generation: {str(e)}"
+        )
+
+
+@router.post("/projects/{project_id}/scenes/generate-prompts", response_model=schemas.SceneGenerationJobResponse)
+async def retry_visual_prompt_generation(
+    project_id: UUID,
+    background_tasks: BackgroundTasks,
+    user_id: str = Depends(get_current_user)
+):
+    """Retry visual prompt generation for existing scenes."""
+    try:
+        # Check if project exists and belongs to user
+        project = supabase_service.get_project(project_id)
+        if not project:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found"
+            )
+
+        if project.get('user_id') != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Project does not belong to user"
+            )
+
+        # Verify scenes exist
+        scenes_count = project.get('scenes_count', 0)
+        if scenes_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No scenes exist yet. Run scene selection first."
+            )
+
+        # Check for existing running visual prompt jobs
+        existing_jobs = supabase_service.client.table('jobs')\
+            .select('*')\
+            .eq('project_id', str(project_id))\
+            .eq('type', 'generate_visual_prompts')\
+            .eq('status', 'running')\
+            .execute()
+
+        if existing_jobs.data:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Visual prompt generation is already running for this project"
+            )
+
+        # Create new visual prompt generation job
+        job_data = {
+            'project_id': str(project_id),
+            'type': 'generate_visual_prompts',
+            'status': 'pending',
+            'progress': 0,
+            'payload_json': {
+                'project_id': str(project_id),
+                'stage': 'initializing',
+                'completed_prompts': 0,
+                'total_prompts': scenes_count
+            }
+        }
+        job = supabase_service.create_job(job_data)
+        job_id = job['id']
+
+        # Update project status if needed
+        if project.get('status') != 'scenes_processing':
+            supabase_service.update_project(project_id, {'status': 'scenes_processing'})
+
+        # Start background visual prompt generation task
+        background_tasks.add_task(
+            visual_prompt_generation_task,
+            str(project_id),
+            job_id
+        )
+
+        return schemas.SceneGenerationJobResponse(
+            job_id=job_id,
+            status='started',
+            estimated_duration=30.0  # ~30 seconds for visual prompt generation only
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to start visual prompt generation: {str(e)}"
         )
 
 
