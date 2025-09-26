@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List, Dict
 from uuid import UUID
+import httpx
+import io
 
-from app.services.supabase import supabase_service, get_user_supabase_service, UserSupabaseService
+from app.services.supabase import supabase_service
 from app.services.supabase_storage import supabase_storage_service
+from app.services.whisper import WhisperService
 from app.dependencies.auth import get_current_user
 from app import models_pydantic as schemas
 
@@ -230,9 +233,27 @@ async def process_project_audio(project_id: UUID, audio_info: schemas.AudioProce
             'transcription_status': 'ready'  # Ready for transcription
         }
 
-        # TODO: Add actual audio duration extraction
-        # For now, we'll use a placeholder
-        audio_duration = 180.0  # 3 minutes default
+        # Get actual audio duration by downloading and analyzing the file
+        try:
+            whisper_service = WhisperService()
+
+            # Download audio file to analyze duration
+            async with httpx.AsyncClient() as client:
+                response = await client.get(audio_info.audio_url, timeout=30.0)
+                if response.status_code != 200:
+                    raise Exception(f"Failed to download audio: {response.status_code}")
+
+                # Create file-like object from downloaded content
+                audio_file = io.BytesIO(response.content)
+
+                # Get duration in minutes, convert to seconds
+                duration_minutes = await whisper_service.get_audio_duration(audio_file)
+                audio_duration = duration_minutes * 60.0  # Convert to seconds
+
+        except Exception as e:
+            # If we can't get the actual duration, use a reasonable default
+            print(f"Warning: Could not get audio duration: {e}")
+            audio_duration = 180.0  # Default 3 minutes
 
         update_data['audio_duration'] = audio_duration
 

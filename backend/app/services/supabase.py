@@ -389,16 +389,3 @@ class UserSupabaseService:
             raise
 
 
-def get_user_supabase_service(
-    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
-    user_id: str = Depends(get_current_user)
-) -> UserSupabaseService:
-    """FastAPI dependency to get UserSupabaseService with user context."""
-    if not credentials or not credentials.credentials:
-        from fastapi import HTTPException, status
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Authentication required for user-specific operations"
-        )
-
-    return UserSupabaseService(credentials.credentials, user_id)

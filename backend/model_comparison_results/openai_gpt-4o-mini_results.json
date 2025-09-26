@@ -1,0 +1,731 @@
+[
+  {
+    "success": true,
+    "model": "openai/gpt-4o-mini",
+    "run": 1,
+    "processing_time": 56.574707984924316,
+    "result": {
+      "song_themes": [
+        "violence",
+        "ambition",
+        "betrayal",
+        "survival"
+      ],
+      "energy_arc": "The song starts with a confident, aggressive tone that steadily builds tension through vivid imagery of street life, culminating in a powerful climax that reflects on betrayal and survival, before tapering off into a more reflective conclusion.",
+      "total_scenes_selected": 18,
+      "average_scene_length": 7.5,
+      "selected_scenes": [
+        {
+          "scene_id": 1,
+          "title": "Easy Kill",
+          "start_time": 0.0,
+          "end_time": 6.6,
+          "duration": 6.6,
+          "source_segments": [
+            0
+          ],
+          "lyrics_excerpt": "Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel",
+          "theme": "Confidence and aggression",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "This opening scene sets the aggressive tone of the song and introduces the protagonist's character."
+        },
+        {
+          "scene_id": 2,
+          "title": "The Drill",
+          "start_time": 6.6,
+          "end_time": 11.2,
+          "duration": 4.6,
+          "source_segments": [
+            1
+          ],
+          "lyrics_excerpt": "I ain't touch the trigger, but I seen the drill",
+          "theme": "Witnessing violence",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This scene emphasizes the protagonist's experiences with violence without direct involvement, adding depth to the narrative."
+        },
+        {
+          "scene_id": 3,
+          "title": "Head Gone",
+          "start_time": 11.2,
+          "end_time": 13.8,
+          "duration": 2.6,
+          "source_segments": [
+            2
+          ],
+          "lyrics_excerpt": "Seen a nigga with his head gone and I can see him still",
+          "theme": "Death and loss",
+          "energy_level": 6,
+          "visual_potential": 9,
+          "narrative_importance": 9,
+          "reasoning": "This haunting image captures the harsh reality of street life, creating a powerful visual impact."
+        },
+        {
+          "scene_id": 4,
+          "title": "Steering Wheel",
+          "start_time": 13.8,
+          "end_time": 16.4,
+          "duration": 2.6,
+          "source_segments": [
+            3
+          ],
+          "lyrics_excerpt": "I swear to God that nigga, she was stuck to the steering wheel",
+          "theme": "Tragedy",
+          "energy_level": 6,
+          "visual_potential": 9,
+          "narrative_importance": 9,
+          "reasoning": "The visual of someone tragically stuck in a car adds to the dark tone and emotional weight of the song."
+        },
+        {
+          "scene_id": 5,
+          "title": "Ten Footers",
+          "start_time": 16.4,
+          "end_time": 21.6,
+          "duration": 5.2,
+          "source_segments": [
+            4,
+            5
+          ],
+          "lyrics_excerpt": "Ten footers fit from five years ago, I'ma wear his skin",
+          "theme": "Revenge and survival",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene portrays a sense of vengeance and survival, showcasing the protagonist's mindset."
+        },
+        {
+          "scene_id": 6,
+          "title": "Watch How I Move",
+          "start_time": 21.6,
+          "end_time": 25.3,
+          "duration": 3.7,
+          "source_segments": [
+            6
+          ],
+          "lyrics_excerpt": "That's why I gotta watch how I move",
+          "theme": "Caution and strategy",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "This scene emphasizes the need for caution in a dangerous environment, adding tension."
+        },
+        {
+          "scene_id": 7,
+          "title": "Jail Life",
+          "start_time": 25.3,
+          "end_time": 30.4,
+          "duration": 5.1,
+          "source_segments": [
+            7,
+            8
+          ],
+          "lyrics_excerpt": "Don't get out of free, jail curt, it's not Monopoly",
+          "theme": "Consequences of crime",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene critiques the idea of escaping consequences, showing the harsh reality of prison life."
+        },
+        {
+          "scene_id": 8,
+          "title": "Scope on",
+          "start_time": 30.4,
+          "end_time": 35.7,
+          "duration": 5.3,
+          "source_segments": [
+            10
+          ],
+          "lyrics_excerpt": "Scope on, he hit a nigga in his dome from down the street",
+          "theme": "Violence",
+          "energy_level": 9,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "The intense imagery of a shooting emphasizes the violence present in the protagonist's life."
+        },
+        {
+          "scene_id": 9,
+          "title": "Cash with Me",
+          "start_time": 35.7,
+          "end_time": 40.8,
+          "duration": 5.1,
+          "source_segments": [
+            12,
+            13
+          ],
+          "lyrics_excerpt": "You ever got hit from a bitch and then you gotta... I heard she had the best pussy in Flint, you know I gotta see",
+          "theme": "Desire and temptation",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This scene juxtaposes violence with desire, reflecting the duality in the protagonist's life."
+        },
+        {
+          "scene_id": 10,
+          "title": "Weed Smell",
+          "start_time": 52.6,
+          "end_time": 55.6,
+          "duration": 3.0,
+          "source_segments": [
+            16
+          ],
+          "lyrics_excerpt": "It's been so long since I smelled the seed, like where the fuck the real bud at?",
+          "theme": "Loss and nostalgia",
+          "energy_level": 6,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "This scene adds a moment of reflection and nostalgia amidst the chaos of street life."
+        },
+        {
+          "scene_id": 11,
+          "title": "Draco in the Club",
+          "start_time": 57.1,
+          "end_time": 60.0,
+          "duration": 2.9,
+          "source_segments": [
+            18
+          ],
+          "lyrics_excerpt": "Don't get too close, we got a fucking Draco in the club, Jack",
+          "theme": "Danger and aggression",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "The imagery of a weapon in a social setting highlights the constant danger in the protagonist's life."
+        },
+        {
+          "scene_id": 12,
+          "title": "Money Talk",
+          "start_time": 62.2,
+          "end_time": 65.9,
+          "duration": 3.7,
+          "source_segments": [
+            20
+          ],
+          "lyrics_excerpt": "I need 30 racks for the fucking show, and where the club at?",
+          "theme": "Ambition",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "This scene emphasizes the motivation behind the hustle and ambition in the lifestyle."
+        },
+        {
+          "scene_id": 13,
+          "title": "Caskets",
+          "start_time": 105.2,
+          "end_time": 110.5,
+          "duration": 5.3,
+          "source_segments": [
+            36
+          ],
+          "lyrics_excerpt": "When I catch up with them boys, they get in a closed casket",
+          "theme": "Revenge and death",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 9,
+          "reasoning": "This scene dramatically visualizes the consequences of street life and revenge, creating a strong emotional impact."
+        },
+        {
+          "scene_id": 14,
+          "title": "Federal Watch",
+          "start_time": 110.5,
+          "end_time": 115.9,
+          "duration": 5.4,
+          "source_segments": [
+            38
+          ],
+          "lyrics_excerpt": "I think my white boy, he working with the feds, he just bought four baskets",
+          "theme": "Betrayal and suspicion",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene introduces an element of paranoia and betrayal, adding depth to the narrative."
+        },
+        {
+          "scene_id": 15,
+          "title": "Bank Smile",
+          "start_time": 94.6,
+          "end_time": 97.2,
+          "duration": 2.6,
+          "source_segments": [
+            32
+          ],
+          "lyrics_excerpt": "I walked out the bank with a smile in a stow bag",
+          "theme": "Success",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "This moment of triumph contrasts the darker themes and highlights the protagonist's success."
+        },
+        {
+          "scene_id": 16,
+          "title": "Nuclear Bomb",
+          "start_time": 155.9,
+          "end_time": 161.3,
+          "duration": 5.4,
+          "source_segments": [
+            56
+          ],
+          "lyrics_excerpt": "We threw a nuclear bomb on that shit, he died from radiation",
+          "theme": "Destruction",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 9,
+          "reasoning": "This final scene delivers a powerful metaphor of destruction, leaving a lasting impact."
+        }
+      ],
+      "reasoning_summary": "The selected scenes were chosen to create a narrative that reflects the complexities of street life, balancing aggression with moments of introspection and ambition. Each scene captures key themes while ensuring a dynamic visual journey through the entirety of the song."
+    },
+    "metrics": {
+      "coverage_percentage": 42.83,
+      "scene_count": 16,
+      "avg_scene_length": 4.32,
+      "processing_time": 56.57,
+      "gaps": {
+        "count": 7,
+        "total_duration": 92.22,
+        "percentage": 57.17,
+        "details": [
+          {
+            "start": 40.8,
+            "end": 52.6,
+            "duration": 11.800000000000004
+          },
+          {
+            "start": 55.6,
+            "end": 57.1,
+            "duration": 1.5
+          },
+          {
+            "start": 60.0,
+            "end": 62.2,
+            "duration": 2.200000000000003
+          },
+          {
+            "start": 65.9,
+            "end": 94.6,
+            "duration": 28.69999999999999
+          },
+          {
+            "start": 97.2,
+            "end": 105.2,
+            "duration": 8.0
+          },
+          {
+            "start": 115.9,
+            "end": 155.9,
+            "duration": 40.0
+          },
+          {
+            "start": 161.3,
+            "end": 161.32000732421875,
+            "duration": 0.02000732421873863
+          }
+        ]
+      },
+      "overlaps": {
+        "count": 0,
+        "total_duration": 0,
+        "details": []
+      },
+      "estimated_cost": {
+        "input_tokens": 1631,
+        "output_tokens": 1744,
+        "input_cost": 0.0002,
+        "output_cost": 0.001,
+        "total_cost": 0.0013
+      },
+      "lyric_coverage": {
+        "original_word_count": 313,
+        "scene_word_count": 139,
+        "covered_word_count": 138,
+        "coverage_percentage": 44.09
+      }
+    },
+    "timestamp": "2025-09-26T15:43:06.872907"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-4o-mini",
+    "run": 2,
+    "processing_time": 68.45334315299988,
+    "result": {
+      "song_themes": [
+        "violence",
+        "survival",
+        "betrayal",
+        "ambition",
+        "struggle"
+      ],
+      "energy_arc": "The song starts with a high energy declaration of dominance, transitions to a mix of introspection and aggression, and culminates in a powerful, reflective conclusion about the harsh realities of life and relationships.",
+      "total_scenes_selected": 18,
+      "average_scene_length": 7.5,
+      "selected_scenes": [
+        {
+          "scene_id": 1,
+          "title": "Ghetto Boy's Resolve",
+          "start_time": 0.0,
+          "end_time": 6.6,
+          "duration": 6.6,
+          "source_segments": [
+            0
+          ],
+          "lyrics_excerpt": "Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel",
+          "theme": "Confidence and power",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "This opening sets the tone for the entire song, establishing the protagonist's identity and confidence."
+        },
+        {
+          "scene_id": 2,
+          "title": "The Drill",
+          "start_time": 6.6,
+          "end_time": 11.2,
+          "duration": 4.6,
+          "source_segments": [
+            1
+          ],
+          "lyrics_excerpt": "I ain't touch the trigger, but I seen the drill",
+          "theme": "Witness and reflection",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This scene emphasizes the protagonist's awareness of violence without direct involvement, adding depth to his character."
+        },
+        {
+          "scene_id": 3,
+          "title": "Haunting Memories",
+          "start_time": 11.2,
+          "end_time": 13.8,
+          "duration": 2.6,
+          "source_segments": [
+            2
+          ],
+          "lyrics_excerpt": "Seen a nigga with his head gone and I can see him still",
+          "theme": "Trauma",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene captures the haunting impact of violence, providing emotional weight to the narrative."
+        },
+        {
+          "scene_id": 4,
+          "title": "Stuck in Reality",
+          "start_time": 13.8,
+          "end_time": 16.4,
+          "duration": 2.6,
+          "source_segments": [
+            3
+          ],
+          "lyrics_excerpt": "I swear to God that nigga, she was stuck to the steering wheel",
+          "theme": "Desperation",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "The imagery here is stark and poignant, highlighting the grim reality faced by individuals in this environment."
+        },
+        {
+          "scene_id": 5,
+          "title": "The Weight of the Past",
+          "start_time": 16.4,
+          "end_time": 18.9,
+          "duration": 2.5,
+          "source_segments": [
+            4
+          ],
+          "lyrics_excerpt": "Ten footers fit from five years ago",
+          "theme": "Reflection and history",
+          "energy_level": 5,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "This moment reflects on the consequences of past actions, adding depth to the protagonist's story."
+        },
+        {
+          "scene_id": 6,
+          "title": "The Gym Grind",
+          "start_time": 18.9,
+          "end_time": 25.3,
+          "duration": 6.4,
+          "source_segments": [
+            5,
+            6
+          ],
+          "lyrics_excerpt": "I put that on my kids, I get in that gym, I can't never tell",
+          "theme": "Dedication and struggle",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene showcases the protagonist's commitment to improvement and his desire to provide for his family."
+        },
+        {
+          "scene_id": 7,
+          "title": "Caution in Movement",
+          "start_time": 25.3,
+          "end_time": 30.4,
+          "duration": 5.1,
+          "source_segments": [
+            7,
+            8
+          ],
+          "lyrics_excerpt": "That's why I gotta watch how I move, Move right, cause if I get some time, then I gotta do it",
+          "theme": "Survival",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This moment illustrates the need for caution and strategy in a dangerous lifestyle."
+        },
+        {
+          "scene_id": 8,
+          "title": "The Cost of Freedom",
+          "start_time": 30.4,
+          "end_time": 33.2,
+          "duration": 2.8,
+          "source_segments": [
+            9
+          ],
+          "lyrics_excerpt": "I'm down four racks and I ain't do shit but go out to eat",
+          "theme": "Frustration",
+          "energy_level": 6,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "This scene captures the irony of financial struggles despite seemingly simple choices."
+        },
+        {
+          "scene_id": 9,
+          "title": "The Hit",
+          "start_time": 33.2,
+          "end_time": 38.6,
+          "duration": 5.4,
+          "source_segments": [
+            10,
+            11
+          ],
+          "lyrics_excerpt": "Scope on, he hit a nigga in his dome from down the street",
+          "theme": "Violence",
+          "energy_level": 9,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "This moment is intense and action-packed, showcasing the violent reality of street life."
+        },
+        {
+          "scene_id": 10,
+          "title": "The Connection",
+          "start_time": 38.6,
+          "end_time": 43.6,
+          "duration": 5.0,
+          "source_segments": [
+            12,
+            13
+          ],
+          "lyrics_excerpt": "You ever got hit from a bitch and then you gotta heard she had the best pussy in Flint, you know I gotta see",
+          "theme": "Desire and temptation",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "This scene adds a layer of personal desire amidst the chaos, showcasing human vulnerability."
+        },
+        {
+          "scene_id": 11,
+          "title": "Cash Game",
+          "start_time": 43.6,
+          "end_time": 52.6,
+          "duration": 9.0,
+          "source_segments": [
+            14,
+            15,
+            16
+          ],
+          "lyrics_excerpt": "Of course I got cash with me, but I'm not with C, Cash with me, so we play the BPSUV",
+          "theme": "Wealth and risk",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This highlights the intersection of money and street life, emphasizing both the allure and danger."
+        },
+        {
+          "scene_id": 12,
+          "title": "Seeking the Real",
+          "start_time": 52.6,
+          "end_time": 60.0,
+          "duration": 7.4,
+          "source_segments": [
+            17,
+            18
+          ],
+          "lyrics_excerpt": "It's been so long since I smelled the seed, like Where the fuck the real bud at?",
+          "theme": "Longing for authenticity",
+          "energy_level": 6,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "This scene captures a yearning for realness in a world filled with fakes, enhancing emotional depth."
+        },
+        {
+          "scene_id": 13,
+          "title": "Danger in the Club",
+          "start_time": 60.0,
+          "end_time": 65.9,
+          "duration": 5.9,
+          "source_segments": [
+            19,
+            20
+          ],
+          "lyrics_excerpt": "Don't get too close, we got a fucking Draco in the club, Jack",
+          "theme": "Threat and tension",
+          "energy_level": 9,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "This scene conveys the palpable danger present in social spaces, adding tension to the narrative."
+        },
+        {
+          "scene_id": 14,
+          "title": "The Encounter",
+          "start_time": 65.9,
+          "end_time": 71.6,
+          "duration": 5.7,
+          "source_segments": [
+            21,
+            22
+          ],
+          "lyrics_excerpt": "Damn, you bad as fuck, where my hug at? We still got the nigga Pipe, he want his gun back",
+          "theme": "Relationships and conflict",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "This moment juxtaposes attraction with the underlying tension of street life, creating a complex dynamic."
+        },
+        {
+          "scene_id": 15,
+          "title": "The Hustler's Truth",
+          "start_time": 71.6,
+          "end_time": 76.8,
+          "duration": 5.2,
+          "source_segments": [
+            23,
+            24
+          ],
+          "lyrics_excerpt": "Do you wanna hear a fun fact? I really made some motherfucking M's and I ain't do number rap",
+          "theme": "Success and authenticity",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene emphasizes the protagonist's success through hard work, reinforcing a narrative of authenticity."
+        },
+        {
+          "scene_id": 16,
+          "title": "The Aftermath",
+          "start_time": 76.8,
+          "end_time": 86.6,
+          "duration": 9.8,
+          "source_segments": [
+            25,
+            28
+          ],
+          "lyrics_excerpt": "Money is not everything, they shot the crib up so bad, fucked the kitchen up",
+          "theme": "Consequences of violence",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "This scene highlights the destructive impact of violence on personal life, providing emotional resonance."
+        },
+        {
+          "scene_id": 17,
+          "title": "Survival's Cost",
+          "start_time": 86.6,
+          "end_time": 92.0,
+          "duration": 5.4,
+          "source_segments": [
+            29,
+            30
+          ],
+          "lyrics_excerpt": "Blew the kitchen up, you know the stove's gas, You better leave my white ends alone with your old ass",
+          "theme": "Defiance and survival",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "This scene emphasizes a fierce resolve to protect oneself and one\u2019s territory, enhancing the narrative's intensity."
+        },
+        {
+          "scene_id": 18,
+          "title": "Final Reflections",
+          "start_time": 92.0,
+          "end_time": 161.3,
+          "duration": 69.3,
+          "source_segments": [
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "lyrics_excerpt": "You ain't want your car to get shot up, you shouldn't have rolled past... We threw a nuclear bomb on that shit, he died from radiation",
+          "theme": "Mortality and reflection",
+          "energy_level": 6,
+          "visual_potential": 10,
+          "narrative_importance": 9,
+          "reasoning": "This concluding scene captures the full weight of the narrative, reflecting on violence, survival, and the harsh realities of life."
+        }
+      ],
+      "reasoning_summary": "The selected scenes collectively depict a vivid narrative of street life, emphasizing themes of violence, survival, and ambition. Each scene was chosen for its cinematic potential and emotional impact, creating a cohesive visual storytelling experience that matches the song's energy and lyrical depth."
+    },
+    "metrics": {
+      "coverage_percentage": 99.99,
+      "scene_count": 18,
+      "avg_scene_length": 8.96,
+      "processing_time": 68.45,
+      "gaps": {
+        "count": 1,
+        "total_duration": 0.02,
+        "percentage": 0.01,
+        "details": [
+          {
+            "start": 161.3,
+            "end": 161.32000732421875,
+            "duration": 0.02000732421873863
+          }
+        ]
+      },
+      "overlaps": {
+        "count": 0,
+        "total_duration": 0,
+        "details": []
+      },
+      "estimated_cost": {
+        "input_tokens": 1631,
+        "output_tokens": 2088,
+        "input_cost": 0.0002,
+        "output_cost": 0.0013,
+        "total_cost": 0.0015
+      },
+      "lyric_coverage": {
+        "original_word_count": 313,
+        "scene_word_count": 175,
+        "covered_word_count": 171,
+        "coverage_percentage": 54.63
+      }
+    },
+    "timestamp": "2025-09-26T15:44:16.329094"
+  }
+]

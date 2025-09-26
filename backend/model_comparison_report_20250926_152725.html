@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMVEE Model Comparison Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .header-info {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header-info h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .stat-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e8f4f8;
+        }
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        .model-details {
+            margin-top: 40px;
+        }
+        .model-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .model-card-header {
+            background: #34495e;
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .model-card-body {
+            padding: 20px;
+        }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .failure {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .consistency-high { color: #27ae60; }
+        .consistency-medium { color: #f39c12; }
+        .consistency-low { color: #e74c3c; }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 OMVEE Model Comparison Report</h1>
+
+        <div class="header-info">
+            <h3>Test Configuration</h3>
+            <p><strong>Song:</strong> "Easy Kill" by Rio Da Yung OG</p>
+            <p><strong>Duration:</strong> 161.3 seconds (57 segments)</p>
+            <p><strong>Generated:</strong> 2025-09-26 15:19:46</p>
+            <p><strong>Models Tested:</strong> 1</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <h4>Total Models Tested</h4>
+                <p class="value">1</p>
+            </div>
+            <div class="stat-card">
+                <h4>Test Song Duration</h4>
+                <p class="value">161.3s</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Segments</h4>
+                <p class="value">57</p>
+            </div>
+            <div class="stat-card">
+                <h4>Best Coverage</h4>
+                <p class="value">0.0%</p>
+            </div>
+        </div>
+
+        <h2>📊 Model Performance Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Success Rate</th>
+                    <th>Coverage %</th>
+                    <th>Scenes</th>
+                    <th>Speed (s)</th>
+                    <th>Cost ($)</th>
+                    <th>Consistency</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td><strong>deepseek/deepseek-v3.1-terminus</strong></td>
+                    <td class="failure">0%</td>
+                    <td>0.0%</td>
+                    <td>0</td>
+                    <td>0.0</td>
+                    <td>$0.0000</td>
+                    <td class="consistency-failed">Failed</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <div class="chart-container">
+            <h3>📈 Coverage Comparison</h3>
+            <div class="chart-wrapper">
+                <canvas id="coverageChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3>⚡ Speed vs Cost Analysis</h3>
+            <div class="chart-wrapper">
+                <canvas id="speedCostChart"></canvas>
+            </div>
+        </div>
+
+        <div class="model-details">
+            <h2>🔍 Detailed Model Results</h2>
+            
+    <div class="model-card">
+        <div class="model-card-header">
+            deepseek/deepseek-v3.1-terminus <span class="failure" style="float: right;">(0/2 successful)</span>
+        </div>
+        <div class="model-card-body">
+            
+        <h4>Failures:</h4>
+        <ul>
+            <li>Run 1: 'SceneSelectionResult' object has no attribute 'get'</li><li>Run 2: 'SceneSelectionResult' object has no attribute 'get'</li>
+        </ul>
+        
+        </div>
+    </div>
+    
+        </div>
+
+        <div class="footer">
+            <p>Generated by OMVEE Model Comparison Tool • 2025-09-26 15:27:25</p>
+        </div>
+    </div>
+
+    <script>
+        // Coverage Chart
+        const coverageCtx = document.getElementById('coverageChart').getContext('2d');
+        new Chart(coverageCtx, {
+            type: 'bar',
+            data: {
+                labels: ["deepseek/deepseek-v3.1-terminus"],
+                datasets: [{
+                    label: 'Coverage Percentage',
+                    data: [0],
+                    backgroundColor: [
+                        '#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'
+                    ],
+                    borderColor: [
+                        '#2980b9', '#c0392b', '#27ae60', '#e67e22', '#8e44ad'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Coverage Percentage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Speed vs Cost Chart
+        const speedCostCtx = document.getElementById('speedCostChart').getContext('2d');
+        new Chart(speedCostCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Models',
+                    data: [],
+                    backgroundColor: '#3498db',
+                    borderColor: '#2980b9',
+                    pointRadius: 8,
+                    pointHoverRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Processing Time (seconds)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Estimated Cost ($)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return point.model + ': ' + context.parsed.x.toFixed(1) + 's, $' + context.parsed.y.toFixed(4);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

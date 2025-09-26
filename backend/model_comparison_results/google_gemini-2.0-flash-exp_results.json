@@ -1,0 +1,18 @@
+[
+  {
+    "success": false,
+    "model": "google/gemini-2.0-flash-exp",
+    "run": 1,
+    "processing_time": 0.2942521572113037,
+    "error": "OpenRouter API error 404: {\"error\":{\"message\":\"No endpoints found for google/gemini-2.0-flash-exp.\",\"code\":404},\"user_id\":\"user_2tn39UWWVyc01ZOO4CKmQ9RA9Gm\"}",
+    "timestamp": "2025-09-26T15:42:08.078520"
+  },
+  {
+    "success": false,
+    "model": "google/gemini-2.0-flash-exp",
+    "run": 2,
+    "processing_time": 0.21433496475219727,
+    "error": "OpenRouter API error 404: {\"error\":{\"message\":\"No endpoints found for google/gemini-2.0-flash-exp.\",\"code\":404},\"user_id\":\"user_2tn39UWWVyc01ZOO4CKmQ9RA9Gm\"}",
+    "timestamp": "2025-09-26T15:42:09.294061"
+  }
+]

@@ -1,0 +1,771 @@
+[
+  {
+    "success": true,
+    "model": "deepseek/deepseek-v3.1-terminus",
+    "run": 1,
+    "processing_time": 58.51490879058838,
+    "result": {
+      "song_themes": [
+        "Street Violence",
+        "Loyalty & Betrayal",
+        "Wealth & Struggle",
+        "Urban Survival"
+      ],
+      "energy_arc": "Starts with aggressive confidence, builds through violent imagery and paranoia, peaks with braggadocio about wealth and power, then resolves with reflections on relationships and consequences",
+      "total_scenes_selected": 18,
+      "average_scene_length": 8.96,
+      "selected_scenes": [
+        {
+          "scene_id": 1,
+          "title": "The Setup",
+          "start_time": 0.0,
+          "end_time": 6.6,
+          "duration": 6.6,
+          "source_segments": [
+            0
+          ],
+          "lyrics_excerpt": "Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel",
+          "theme": "Aggressive Confidence",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 9,
+          "reasoning": "Opening establishes tone - perfect for showing crew preparing weapons, establishing dominance"
+        },
+        {
+          "scene_id": 2,
+          "title": "Aftermath Vision",
+          "start_time": 6.6,
+          "end_time": 16.4,
+          "duration": 9.8,
+          "source_segments": [
+            1,
+            2,
+            3
+          ],
+          "lyrics_excerpt": "I ain't touch the trigger, but I seen the drill... Seen a nigga with his head gone and I can see him still",
+          "theme": "Violent Aftermath",
+          "energy_level": 7,
+          "visual_potential": 10,
+          "narrative_importance": 8,
+          "reasoning": "Graphic imagery of death and trauma - highly cinematic for slow-motion, gritty visuals"
+        },
+        {
+          "scene_id": 3,
+          "title": "Steering Wheel Horror",
+          "start_time": 16.4,
+          "end_time": 21.6,
+          "duration": 5.2,
+          "source_segments": [
+            4,
+            5
+          ],
+          "lyrics_excerpt": "she was stuck to the steering wheel... I'ma wear his skin",
+          "theme": "Brutal Violence",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 7,
+          "reasoning": "Extremely vivid violent imagery - creates shocking moment in video"
+        },
+        {
+          "scene_id": 4,
+          "title": "Paranoia & Caution",
+          "start_time": 21.6,
+          "end_time": 30.4,
+          "duration": 8.8,
+          "source_segments": [
+            6,
+            7,
+            8
+          ],
+          "lyrics_excerpt": "I can't never tell... if I get some time, then I gotta do it",
+          "theme": "Street Paranoia",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Shows psychological toll - good for surveillance-style shots, looking over shoulder"
+        },
+        {
+          "scene_id": 5,
+          "title": "Financial Strain",
+          "start_time": 30.4,
+          "end_time": 38.6,
+          "duration": 8.2,
+          "source_segments": [
+            9,
+            10,
+            11
+          ],
+          "lyrics_excerpt": "I'm down four racks... he hit a nigga in his dome from down the street",
+          "theme": "Money Problems",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 6,
+          "reasoning": "Shows financial pressure leading to violence - important character development"
+        },
+        {
+          "scene_id": 6,
+          "title": "Flint Temptation",
+          "start_time": 38.6,
+          "end_time": 46.9,
+          "duration": 8.3,
+          "source_segments": [
+            12,
+            13,
+            14
+          ],
+          "lyrics_excerpt": "I heard she had the best pussy in Flint, you know I gotta see",
+          "theme": "Urban Hedonism",
+          "energy_level": 5,
+          "visual_potential": 7,
+          "narrative_importance": 5,
+          "reasoning": "Provides variety - sensual element breaks from constant violence"
+        },
+        {
+          "scene_id": 7,
+          "title": "Club Security",
+          "start_time": 46.9,
+          "end_time": 57.1,
+          "duration": 10.2,
+          "source_segments": [
+            15,
+            16,
+            17
+          ],
+          "lyrics_excerpt": "we play the BPSUV... Draco in the club, Jack",
+          "theme": "Nightlife Danger",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 7,
+          "reasoning": "Club scene with hidden weapons - classic hip hop video material"
+        },
+        {
+          "scene_id": 8,
+          "title": "Big Money Demands",
+          "start_time": 57.1,
+          "end_time": 68.1,
+          "duration": 11.0,
+          "source_segments": [
+            18,
+            19,
+            20,
+            21
+          ],
+          "lyrics_excerpt": "Buy a pint of Axe for 20 racks... I need 30 racks for the fucking show",
+          "theme": "Financial Power",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 6,
+          "reasoning": "Shows scale of operations - good for luxury car shots, money counting"
+        },
+        {
+          "scene_id": 9,
+          "title": "Gun Politics",
+          "start_time": 68.1,
+          "end_time": 76.8,
+          "duration": 8.7,
+          "source_segments": [
+            22,
+            23,
+            24
+          ],
+          "lyrics_excerpt": "We still got the nigga Pipe, he want his gun back... I really made some M's",
+          "theme": "Criminal Enterprise",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "Shows business side of street life - weapon logistics and financial success"
+        },
+        {
+          "scene_id": 10,
+          "title": "Wealth Indifference",
+          "start_time": 76.8,
+          "end_time": 86.6,
+          "duration": 9.8,
+          "source_segments": [
+            25,
+            26,
+            27,
+            28
+          ],
+          "lyrics_excerpt": "You ever had five M's at once?... They shot the crib up so bad",
+          "theme": "Consequence of Wealth",
+          "energy_level": 7,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "Contrast between wealth and violence - shot-up mansion imagery"
+        },
+        {
+          "scene_id": 11,
+          "title": "Gas Station Warning",
+          "start_time": 86.6,
+          "end_time": 94.6,
+          "duration": 8.0,
+          "source_segments": [
+            29,
+            30,
+            31
+          ],
+          "lyrics_excerpt": "you know the stove's gas... You shouldn't have rolled past",
+          "theme": "Territorial Defense",
+          "energy_level": 8,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Shows protection of assets and territory - good for confrontation scene"
+        },
+        {
+          "scene_id": 12,
+          "title": "Bank Success",
+          "start_time": 94.6,
+          "end_time": 105.2,
+          "duration": 10.6,
+          "source_segments": [
+            32,
+            33,
+            34,
+            35
+          ],
+          "lyrics_excerpt": "I walked out the bank with a smile... bring the dope back",
+          "theme": "Criminal Success",
+          "energy_level": 7,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "Shows payoff of criminal activities - bank scenes always cinematic"
+        },
+        {
+          "scene_id": 13,
+          "title": "Funeral Planning",
+          "start_time": 105.2,
+          "end_time": 113.5,
+          "duration": 8.3,
+          "source_segments": [
+            36,
+            37,
+            38
+          ],
+          "lyrics_excerpt": "they get in a closed casket... he just bought four baskets",
+          "theme": "Lethal Consequences",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 7,
+          "reasoning": "Graphic threat imagery - funeral/casket visuals create dramatic tension"
+        },
+        {
+          "scene_id": 14,
+          "title": "Snitch Suspicion",
+          "start_time": 113.5,
+          "end_time": 123.8,
+          "duration": 10.3,
+          "source_segments": [
+            39,
+            40,
+            41,
+            42
+          ],
+          "lyrics_excerpt": "He ain't never bought more than a gram... as niggas gonna tell",
+          "theme": "Paranoia & Betrayal",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "Shows constant suspicion in street life - important for character depth"
+        },
+        {
+          "scene_id": 15,
+          "title": "Self-Made Pride",
+          "start_time": 123.8,
+          "end_time": 134.6,
+          "duration": 10.8,
+          "source_segments": [
+            43,
+            44,
+            45,
+            46
+          ],
+          "lyrics_excerpt": "I ran my shit up, this is not another nigga Benz... racks that I can't spend",
+          "theme": "Entrepreneurial Success",
+          "energy_level": 6,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "Shows pride in self-made status - important character moment"
+        },
+        {
+          "scene_id": 16,
+          "title": "Loyalty Test",
+          "start_time": 134.6,
+          "end_time": 145.2,
+          "duration": 10.6,
+          "source_segments": [
+            47,
+            48,
+            49,
+            50
+          ],
+          "lyrics_excerpt": "Solid ass nigga, not gon' fucking bend... what you got cutter for?",
+          "theme": "Street Loyalty",
+          "energy_level": 7,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "Emphasizes code of the streets - important for thematic consistency"
+        },
+        {
+          "scene_id": 17,
+          "title": "Complex Relationships",
+          "start_time": 145.2,
+          "end_time": 155.9,
+          "duration": 10.7,
+          "source_segments": [
+            51,
+            52,
+            53,
+            54
+          ],
+          "lyrics_excerpt": "I hate my baby mama, but I love her though... they hatin' cause of our situation",
+          "theme": "Emotional Conflict",
+          "energy_level": 5,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Adds emotional depth - shows human side behind tough exterior"
+        },
+        {
+          "scene_id": 18,
+          "title": "Nuclear Finale",
+          "start_time": 155.9,
+          "end_time": 161.3,
+          "duration": 5.4,
+          "source_segments": [
+            55,
+            56
+          ],
+          "lyrics_excerpt": "They hit him with some big shit... he died from radiation",
+          "theme": "Apocalyptic Conclusion",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 9,
+          "reasoning": "Powerful closing imagery - nuclear metaphor provides dramatic finale"
+        }
+      ],
+      "reasoning_summary": "Selected 18 scenes to maintain pacing while covering the full 161.3 seconds. Prioritized scenes with strong visual imagery (violence, money, consequences) while ensuring narrative flow. Balanced high-energy violent scenes with moments of reflection and character development. Each scene transitions seamlessly to the next with no timeline gaps. The selection creates an arc from aggressive confidence through consequences to final apocalyptic imagery."
+    },
+    "metrics": {
+      "coverage_percentage": 99.99,
+      "scene_count": 18,
+      "avg_scene_length": 8.96,
+      "processing_time": 58.51,
+      "gaps": {
+        "count": 1,
+        "total_duration": 0.02,
+        "percentage": 0.01,
+        "details": [
+          {
+            "start": 161.3,
+            "end": 161.32000732421875,
+            "duration": 0.02000732421873863
+          }
+        ]
+      },
+      "overlaps": {
+        "count": 0,
+        "total_duration": 0,
+        "details": []
+      },
+      "estimated_cost": {
+        "input_tokens": 1631,
+        "output_tokens": 1944,
+        "input_cost": 0.0004,
+        "output_cost": 0.0019,
+        "total_cost": 0.0024
+      },
+      "lyric_coverage": {
+        "original_word_count": 313,
+        "scene_word_count": 160,
+        "covered_word_count": 144,
+        "coverage_percentage": 46.01
+      }
+    },
+    "timestamp": "2025-09-26T15:34:59.286615"
+  },
+  {
+    "success": true,
+    "model": "deepseek/deepseek-v3.1-terminus",
+    "run": 2,
+    "processing_time": 71.6112949848175,
+    "result": {
+      "song_themes": [
+        "Street Violence",
+        "Survival Paranoia",
+        "Wealth Contradictions",
+        "Loyalty & Betrayal",
+        "Ghetto Realities"
+      ],
+      "energy_arc": "Starts with violent confidence, transitions through paranoid tension, builds to defiant bravado about wealth and survival, then resolves with complex emotional reflections on love/hate relationships and ultimate destruction",
+      "total_scenes_selected": 19,
+      "average_scene_length": 8.5,
+      "selected_scenes": [
+        {
+          "scene_id": 1,
+          "title": "The Setup",
+          "start_time": 0.0,
+          "end_time": 6.6,
+          "duration": 6.6,
+          "source_segments": [
+            0
+          ],
+          "lyrics_excerpt": "Line them up, that's a easy kill I'm a real ghetto boy, I build peasy steel",
+          "theme": "Violent Confidence",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 9,
+          "reasoning": "Opening establishes the song's violent tone and protagonist's mindset - perfect for establishing shot with cinematic tension"
+        },
+        {
+          "scene_id": 2,
+          "title": "Witness to Violence",
+          "start_time": 6.6,
+          "end_time": 16.4,
+          "duration": 9.8,
+          "source_segments": [
+            1,
+            2,
+            3
+          ],
+          "lyrics_excerpt": "I ain't touch the trigger, but I seen the drill... Seen a nigga with his head gone and I can see him still",
+          "theme": "Traumatic Memory",
+          "energy_level": 7,
+          "visual_potential": 10,
+          "narrative_importance": 8,
+          "reasoning": "Graphic imagery of violence creates powerful flashback sequence showing protagonist's trauma"
+        },
+        {
+          "scene_id": 3,
+          "title": "Steering Wheel Horror",
+          "start_time": 16.4,
+          "end_time": 21.6,
+          "duration": 5.2,
+          "source_segments": [
+            4,
+            5
+          ],
+          "lyrics_excerpt": "she was stuck to the steering wheel... I'ma wear his skin I put that on my kids",
+          "theme": "Brutal Aftermath",
+          "energy_level": 6,
+          "visual_potential": 9,
+          "narrative_importance": 7,
+          "reasoning": "Specific, haunting imagery of a violent scene with emotional weight"
+        },
+        {
+          "scene_id": 4,
+          "title": "Paranoid Calculations",
+          "start_time": 21.6,
+          "end_time": 30.4,
+          "duration": 8.8,
+          "source_segments": [
+            6,
+            7,
+            8
+          ],
+          "lyrics_excerpt": "I can't never tell... Don't get out of free, jail curt, it's not Monopoly",
+          "theme": "Street Paranoia",
+          "energy_level": 5,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Shows the psychological toll and constant calculation required for survival"
+        },
+        {
+          "scene_id": 5,
+          "title": "Expensive Lifestyle",
+          "start_time": 30.4,
+          "end_time": 38.6,
+          "duration": 8.2,
+          "source_segments": [
+            9,
+            10,
+            11
+          ],
+          "lyrics_excerpt": "I'm down four racks and I ain't do shit but go out to eat... Scope on, he hit a nigga in his dome",
+          "theme": "Wealth & Violence",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 6,
+          "reasoning": "Contrast between extravagant spending and sudden violence creates tension"
+        },
+        {
+          "scene_id": 6,
+          "title": "Flint Temptation",
+          "start_time": 38.6,
+          "end_time": 46.9,
+          "duration": 8.3,
+          "source_segments": [
+            12,
+            13,
+            14
+          ],
+          "lyrics_excerpt": "You ever got hit from a bitch... I heard she had the best pussy in Flint, you know I gotta see",
+          "theme": "Sexual Danger",
+          "energy_level": 5,
+          "visual_potential": 7,
+          "narrative_importance": 6,
+          "reasoning": "Adds dimension to character showing vulnerability to temptation"
+        },
+        {
+          "scene_id": 7,
+          "title": "Club Security",
+          "start_time": 46.9,
+          "end_time": 57.1,
+          "duration": 10.2,
+          "source_segments": [
+            15,
+            16,
+            17
+          ],
+          "lyrics_excerpt": "Before I go back broke, I sell some weed... Where the fuck the real bud at?",
+          "theme": "Business & Protection",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Shows the business side and constant need for security in social settings"
+        },
+        {
+          "scene_id": 8,
+          "title": "Draco in the Club",
+          "start_time": 57.1,
+          "end_time": 65.9,
+          "duration": 8.8,
+          "source_segments": [
+            18,
+            19,
+            20
+          ],
+          "lyrics_excerpt": "Don't get too close, we got a fucking Draco in the club... I need 30 racks for the fucking show",
+          "theme": "Public Threat",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "High-energy scene with clear visual potential of weapon in social setting"
+        },
+        {
+          "scene_id": 9,
+          "title": "Bad Girl Interlude",
+          "start_time": 65.9,
+          "end_time": 73.2,
+          "duration": 7.3,
+          "source_segments": [
+            21,
+            22,
+            23
+          ],
+          "lyrics_excerpt": "Damn, you bad as fuck, where my hug at?... Do you wanna hear a fun fact?",
+          "theme": "Momentary Distraction",
+          "energy_level": 4,
+          "visual_potential": 6,
+          "narrative_importance": 5,
+          "reasoning": "Provides brief respite and character depth before building energy again"
+        },
+        {
+          "scene_id": 10,
+          "title": "Wealth Declaration",
+          "start_time": 73.2,
+          "end_time": 81.6,
+          "duration": 8.4,
+          "source_segments": [
+            24,
+            25,
+            26
+          ],
+          "lyrics_excerpt": "I really made some motherfucking M's and I ain't do number rap... you won't understand why I don't give a fuck",
+          "theme": "Financial Power",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 8,
+          "reasoning": "Key moment establishing protagonist's success and defiant attitude"
+        },
+        {
+          "scene_id": 11,
+          "title": "Kitchen Shooting",
+          "start_time": 81.6,
+          "end_time": 89.4,
+          "duration": 7.8,
+          "source_segments": [
+            27,
+            28,
+            29
+          ],
+          "lyrics_excerpt": "Money is not everything... They shot the crib up so bad, fucked the kitchen up",
+          "theme": "Domestic Violence",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 9,
+          "reasoning": "Highly cinematic home invasion scene with intense visual potential"
+        },
+        {
+          "scene_id": 12,
+          "title": "Street Warning",
+          "start_time": 89.4,
+          "end_time": 97.2,
+          "duration": 7.8,
+          "source_segments": [
+            30,
+            31,
+            32
+          ],
+          "lyrics_excerpt": "You better leave my white ends alone... I walked out the bank with a smile in a stow bag",
+          "theme": "Territorial Control",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Shows protagonist's power and control over his territory and finances"
+        },
+        {
+          "scene_id": 13,
+          "title": "Bank Run Success",
+          "start_time": 97.2,
+          "end_time": 105.2,
+          "duration": 8.0,
+          "source_segments": [
+            33,
+            34,
+            35
+          ],
+          "lyrics_excerpt": "I sent her to the bank on a plane, and she drove back... Ironic how he never left the house, but bring the dope back",
+          "theme": "Criminal Enterprise",
+          "energy_level": 6,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Reveals the scale and sophistication of the operation"
+        },
+        {
+          "scene_id": 14,
+          "title": "Casket Prediction",
+          "start_time": 105.2,
+          "end_time": 113.5,
+          "duration": 8.3,
+          "source_segments": [
+            36,
+            37,
+            38
+          ],
+          "lyrics_excerpt": "When I catch up with them boys, they get in a closed casket... he just bought four baskets",
+          "theme": "Mortal Threat",
+          "energy_level": 8,
+          "visual_potential": 9,
+          "narrative_importance": 8,
+          "reasoning": "Direct threat with powerful visual imagery of caskets and betrayal"
+        },
+        {
+          "scene_id": 15,
+          "title": "Trash Disposal",
+          "start_time": 113.5,
+          "end_time": 121.2,
+          "duration": 7.7,
+          "source_segments": [
+            39,
+            40,
+            41
+          ],
+          "lyrics_excerpt": "He ain't never bought more than a gram... Take the trash out with a pole in your hand",
+          "theme": "Ruthless Efficiency",
+          "energy_level": 7,
+          "visual_potential": 8,
+          "narrative_importance": 7,
+          "reasoning": "Metaphorical language creates strong visual of disposing of enemies"
+        },
+        {
+          "scene_id": 16,
+          "title": "Self-Made Declaration",
+          "start_time": 121.2,
+          "end_time": 131.7,
+          "duration": 10.5,
+          "source_segments": [
+            42,
+            43,
+            44,
+            45
+          ],
+          "lyrics_excerpt": "I can't put my life in another nigga's hands... Two months ago, I got a big event",
+          "theme": "Individual Sovereignty",
+          "energy_level": 6,
+          "visual_potential": 7,
+          "narrative_importance": 8,
+          "reasoning": "Critical character development showing independence and success"
+        },
+        {
+          "scene_id": 17,
+          "title": "Unspent Wealth",
+          "start_time": 131.7,
+          "end_time": 142.5,
+          "duration": 10.8,
+          "source_segments": [
+            46,
+            47,
+            48,
+            49
+          ],
+          "lyrics_excerpt": "300 racks that I can't fucking spend... We was not at K&J, we at the other stuff",
+          "theme": "Wealth Paradox",
+          "energy_level": 5,
+          "visual_potential": 7,
+          "narrative_importance": 7,
+          "reasoning": "Shows the contradictions of illegal wealth - money that can't be used"
+        },
+        {
+          "scene_id": 18,
+          "title": "Nuclear Finale",
+          "start_time": 142.5,
+          "end_time": 161.3,
+          "duration": 18.8,
+          "source_segments": [
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "lyrics_excerpt": "I hate the number four... We threw a nuclear bomb on that shit, he died from radiation",
+          "theme": "Ultimate Destruction",
+          "energy_level": 9,
+          "visual_potential": 10,
+          "narrative_importance": 10,
+          "reasoning": "Powerful climax with complex emotions and apocalyptic imagery - extended scene for dramatic conclusion"
+        }
+      ],
+      "reasoning_summary": "Selected 19 scenes to maintain narrative flow while ensuring complete timeline coverage. Focused on segments with highest visual potential (violent imagery, specific locations, emotional moments) while maintaining the song's gritty authenticity. Scenes progress from establishing violent credibility through paranoid survival to defiant wealth declarations, culminating in the nuclear metaphor finale. Balanced high-energy action scenes with character development moments to create cinematic variety while staying true to the song's raw street narrative."
+    },
+    "metrics": {
+      "coverage_percentage": 99.99,
+      "scene_count": 18,
+      "avg_scene_length": 8.96,
+      "processing_time": 71.61,
+      "gaps": {
+        "count": 1,
+        "total_duration": 0.02,
+        "percentage": 0.01,
+        "details": [
+          {
+            "start": 161.3,
+            "end": 161.32000732421875,
+            "duration": 0.02000732421873863
+          }
+        ]
+      },
+      "overlaps": {
+        "count": 0,
+        "total_duration": 0,
+        "details": []
+      },
+      "estimated_cost": {
+        "input_tokens": 1631,
+        "output_tokens": 2096,
+        "input_cost": 0.0004,
+        "output_cost": 0.0021,
+        "total_cost": 0.0025
+      },
+      "lyric_coverage": {
+        "original_word_count": 313,
+        "scene_word_count": 195,
+        "covered_word_count": 176,
+        "coverage_percentage": 56.23
+      }
+    },
+    "timestamp": "2025-09-26T15:36:11.908360"
+  }
+]

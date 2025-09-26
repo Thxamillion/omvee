@@ -53,7 +53,7 @@ class OpenRouterService:
             print(f"📋 Prompt type: {prompt_type}")
             print(f"📋 Response length: {len(response)} chars")
 
-    async def select_scenes(self, transcription: TranscriptionResult, target_scenes: int = 15, song_metadata: Dict[str, Any] = None) -> SceneSelectionResult:
+    async def select_scenes(self, transcription: TranscriptionResult, target_scenes: int = 15, song_metadata: Dict[str, Any] = None, song_duration: float = None) -> SceneSelectionResult:
         """
         Select scenes from transcription using AI analysis.
 
@@ -67,6 +67,15 @@ class OpenRouterService:
         """
         if not transcription.segments:
             raise ValueError("Transcription must contain segments for scene selection")
+
+        # Calculate song duration from transcription if not provided
+        if song_duration is None:
+            # Find the last segment's end time
+            last_segment = transcription.segments[-1]
+            if isinstance(last_segment, dict):
+                song_duration = last_segment.get('end', 0)
+            else:
+                song_duration = getattr(last_segment, 'end', 0)
 
         # Validate target_scenes range (15-20 when using AI discretion)
         if not 15 <= target_scenes <= 20:
@@ -95,9 +104,11 @@ SONG INFORMATION:
 TRANSCRIPT SEGMENTS:
 {chr(10).join(segments_text)}
 
+SONG DURATION: {song_duration:.1f} seconds
+
 TASK: Select between 15-20 scenes from these lyrics that would make the most compelling music video. Use your discretion to choose the optimal number of scenes based on the song content. Each scene should be 5-10 seconds long.
 
-COVERAGE REQUIREMENT: Ensure 100% coverage of the song timeline. When one scene's end_time finishes, the next scene's start_time should begin immediately with NO GAPS. The scenes must cover the entire song from start to finish without skipping any content.
+CRITICAL COVERAGE REQUIREMENT: The song is {song_duration:.1f} seconds long. Your scenes MUST cover from 0 seconds to {song_duration:.1f} seconds with NO GAPS. When one scene's end_time finishes, the next scene's start_time should begin immediately. The scenes must cover the entire song from start to finish without skipping any content. DO NOT stop at 60 seconds - you must cover the FULL {song_duration:.1f} second duration.
 
 SELECTION CRITERIA:
 - Visual storytelling potential (1-10)

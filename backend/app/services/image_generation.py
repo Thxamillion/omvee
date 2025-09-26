@@ -104,6 +104,13 @@ class ImageGenerationService:
             if reference_image_url:
                 print(f"🖼️ Reference: {reference_image_url}")
 
+            print(f"🔧 Full parameters being sent to Replicate:")
+            for key, value in params.items():
+                if key == "prompt":
+                    print(f"  {key}: {str(value)[:100]}...")
+                else:
+                    print(f"  {key}: {value}")
+
             # Generate image using Replicate
             start_time = datetime.now()
 

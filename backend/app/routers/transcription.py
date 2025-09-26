@@ -44,6 +44,7 @@ async def download_audio_file(audio_url: str) -> bytes:
 async def transcription_background_task(project_id: str, audio_url: str, job_id: str):
     """Background task for audio transcription using DB-backed jobs."""
     try:
+        print(f"[transcription] job {job_id} starting for project {project_id}")
         # Mark job as running
         supabase_service.update_job(job_id, {
             'status': 'running',
@@ -55,6 +56,7 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
         })
 
         # Download audio file
+        print(f"[transcription] job {job_id} downloading audio")
         audio_content = await download_audio_file(audio_url)
         supabase_service.update_job(job_id, {
             'progress': 30,
@@ -74,6 +76,7 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
         audio_file = BytesIO(audio_content)
         audio_file.name = filename
 
+        print(f"[transcription] job {job_id} transcribing audio filename={filename}")
         transcription_result = await whisper_service.transcribe_audio(
             audio_file=audio_file,
             filename=filename
@@ -87,17 +90,30 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
             }
         })
 
-        # Save transcription to project
+        # Extract actual audio duration from transcription segments
+        actual_audio_duration = 0.0
+        if transcription_result.segments:
+            # Find the last segment's end time
+            last_segment = transcription_result.segments[-1]
+            if isinstance(last_segment, dict):
+                actual_audio_duration = last_segment.get('end', 0.0)
+            else:
+                actual_audio_duration = getattr(last_segment, 'end', 0.0)
+
+        # Save transcription to project with correct audio duration
         update_data = {
             'transcription_status': 'completed',
             'transcription_data': transcription_result.model_dump(),
-            'transcript_text': transcription_result.text
+            'transcript_text': transcription_result.text,
+            'audio_duration': actual_audio_duration  # Update with actual duration from transcription
         }
+        print(f"[transcription] job {job_id} saving transcription to project {project_id}")
         result = supabase_service.update_project(UUID(project_id), update_data)
         if not result:
             raise Exception("Failed to save transcription to project")
 
         # Mark job as completed
+        print(f"[transcription] job {job_id} completed")
         supabase_service.update_job(job_id, {
             'status': 'completed',
             'progress': 100,
@@ -110,6 +126,7 @@ async def transcription_background_task(project_id: str, audio_url: str, job_id:
 
     except Exception as e:
         # Mark job as failed
+        print(f"[transcription] job {job_id} failed: {e}")
         supabase_service.update_job(job_id, {
             'status': 'failed',
             'progress': 0,

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-09-26T15:19:46.598955",
+  "test_data_info": {
+    "title": "Easy Kill",
+    "artist": "Rio Da Yung OG",
+    "duration": 161.32000732421875,
+    "segment_count": 57
+  },
+  "models_tested": [
+    "deepseek/deepseek-v3.1-terminus"
+  ],
+  "results": {
+    "deepseek/deepseek-v3.1-terminus": [
+      {
+        "success": false,
+        "model": "deepseek/deepseek-v3.1-terminus",
+        "run": 1,
+        "processing_time": 82.70895791053772,
+        "error": "'SceneSelectionResult' object has no attribute 'get'",
+        "timestamp": "2025-09-26T15:18:02.772155"
+      },
+      {
+        "success": false,
+        "model": "deepseek/deepseek-v3.1-terminus",
+        "run": 2,
+        "processing_time": 101.82199287414551,
+        "error": "'SceneSelectionResult' object has no attribute 'get'",
+        "timestamp": "2025-09-26T15:19:45.594820"
+      }
+    ]
+  }
+}

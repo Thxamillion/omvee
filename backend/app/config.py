@@ -11,7 +11,7 @@ class ModelConfig:
     video_model: str = "bytedance/seedance-1-lite:5b618302c710fbcf00365dc75133537b5deed8a95dccaf983215559bb31fc943"
 
     # Scene Selection & Prompt Generation
-    scene_selection_model: str = "deepseek/deepseek-chat"
+    scene_selection_model: str = "deepseek/deepseek-v3.1-terminus"
 
 
 class Settings(BaseSettings):
